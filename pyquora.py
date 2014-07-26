@@ -94,15 +94,15 @@ class Quora:
             type = check_activity_type(entry['description'])
             if type is not None:
                 if type == ACTIVITY_ITEM_TYPES.UPVOTE:
-                    activity.upvotes.append(entry)
+                    activity.upvotes.append(build_feed_item(entry))
                 elif type == ACTIVITY_ITEM_TYPES.USER_FOLLOW:
-                    activity.user_follows.append(entry)
+                    activity.user_follows.append(build_feed_item(entry))
                 elif type == ACTIVITY_ITEM_TYPES.QUESTION_FOLLOW:
-                    activity.question_follows.append(entry)
+                    activity.question_follows.append(build_feed_item(entry))
                 elif type == ACTIVITY_ITEM_TYPES.ANSWER:
-                    activity.answers.append(entry)
+                    activity.answers.append(build_feed_item(entry))
                 elif type == ACTIVITY_ITEM_TYPES.QUESTION:
-                    activity.questions.append(entry)
+                    activity.questions.append(build_feed_item(entry))
         return activity
 
 class Activity:
