@@ -1,3 +1,8 @@
-from pyquora import Quora
+from pyquora import Quora, Activity
 
-print Quora.get_user_activity('Christopher-J-Su')
+activity = Quora.get_activity('Christopher-J-Su')
+print activity.answers
+print activity.question_follows
+print activity.user_follows
+print activity.upvotes
+print activity.questions
