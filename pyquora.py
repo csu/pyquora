@@ -1,6 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
 import feedparser
+import re
 
 ### Enumerated Types ###
 def enum(*sequential, **named):
@@ -14,11 +15,14 @@ ACTIVITY_ITEM_TYPES = enum(UPVOTE=1, USER_FOLLOW=2, QUESTION_FOLLOW=3, ANSWER=4,
 ####################################################################
 # Helpers
 ####################################################################
-def get_count(element):
+def try_cast(s):
     try:
-        return int(element.find('span', class_='profile-tab-count').string)
+        return int(s)
     except ValueError:
-        return element.find('span', class_='profile-tab-count').string
+        return s
+
+def get_count(element):
+    return try_cast(element.find('span', class_='profile-tab-count').string)
 
 def get_count_for_user_href(soup, user, suffix):
     return get_count(soup.find('a', class_='link_label', href='/' + user + '/' + suffix))
@@ -56,21 +60,30 @@ class Quora:
         soup = BeautifulSoup(requests.get('http://www.quora.com/' + user).text)
         user_dict = { 'username': user }
         user_dict['name'] = soup.find('h1').find('span', class_='user').string
-        attributes_to_href_suffix = {
-            'followers': 'followers',
-            'following': 'following',
-            'topics': 'topics',
-            'blogs': 'blogs',
-            'posts': 'all_posts',
-            'questions': 'questions',
-            'answers': 'answers',
-            'edits': 'log'
-        }
-        for attribute, suffix in attributes_to_href_suffix.iteritems():
-            try:
-                user_dict[attribute] = get_count_for_user_href(soup, user, suffix)
-            except:
-                pass
+
+        if soup.find('div', class_="empty_area br10 light") is not None:
+            attributes = ['Followers', 'Following', 'Topics', 'Blogs', 'Posts', 'Questions', 'Answers', 'Reviews', 'Edits']
+
+            for item in soup.findAll('li', class_="tab #"):
+                label = item.find('strong').string
+                if label in attributes:
+                    user_dict[label.lower()] = try_cast(item.find('span').string)
+        else:
+            attributes_to_href_suffix = {
+                'followers': 'followers',
+                'following': 'following',
+                'topics': 'topics',
+                'blogs': 'blogs',
+                'posts': 'all_posts',
+                'questions': 'questions',
+                'answers': 'answers',
+                'edits': 'log'
+            }
+            for attribute, suffix in attributes_to_href_suffix.iteritems():
+                try:
+                    user_dict[attribute] = get_count_for_user_href(soup, user, suffix)
+                except:
+                    pass
         return user_dict
 
     @staticmethod
