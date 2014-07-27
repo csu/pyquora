@@ -1,6 +1,6 @@
-===========
-Quora
-===========
+=====
+quora
+=====
 
 A Python module to fetch and parse data from Quora.
 
