@@ -1,4 +1,4 @@
-from pyquora import Quora, Activity
+from quora import Quora, Activity
 
 activity = Quora.get_activity('Christopher-J-Su')
 # print activity.answers
