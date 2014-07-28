@@ -1,0 +1,101 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>pyquora by csu</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <script src="javascripts/scale.fix.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>pyquora</h1>
+        <p>A Python module for fetching and parsing data from Quora.</p>
+        <p class="view"><a href="https://github.com/csu/pyquora">View the Project on GitHub <small>csu/pyquora</small></a></p>
+        <ul>
+          <li><a href="https://github.com/csu/pyquora/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/csu/pyquora/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/csu/pyquora">View On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
+        <h1>
+<a name="quora" class="anchor" href="#quora"><span class="octicon octicon-link"></span></a>quora</h1>
+
+<p>A Python module to fetch and parse data from Quora.</p>
+
+<h2>
+<a name="installation" class="anchor" href="#installation"><span class="octicon octicon-link"></span></a>Installation</h2>
+
+<p>You will need <a href="https://www.python.org/download/">Python 2</a>. <a href="http://pip.readthedocs.org/en/latest/installing.html">pip</a> is recommended for installing dependencies.</p>
+
+<p>Install using pip:</p>
+
+<pre><code>pip install quora
+</code></pre>
+
+<h2>
+<a name="usage" class="anchor" href="#usage"><span class="octicon octicon-link"></span></a>Usage</h2>
+
+<pre><code>from quora import Quora, Activity
+
+quora = new Quora()
+activity = get_activity('Christopher-J-Su')
+
+# do stuff with the parsed data
+activity.answers
+activity.questions
+activity.upvotes
+activity.question_follows
+</code></pre>
+
+<h2>
+<a name="features" class="anchor" href="#features"><span class="octicon octicon-link"></span></a>Features</h2>
+
+<h3>
+<a name="currently-implemented" class="anchor" href="#currently-implemented"><span class="octicon octicon-link"></span></a>Currently implemented</h3>
+
+<ul>
+<li>User statistics</li>
+<li>User activity
+
+<ul>
+<li>Broken down into answers, questions, votes, user follows, and question follows</li>
+</ul>
+</li>
+</ul><h3>
+<a name="todo" class="anchor" href="#todo"><span class="octicon octicon-link"></span></a>Todo</h3>
+
+<ul>
+<li>Questions and answers</li>
+<li>Detailed user information (followers, following, etc.; not just statistics)</li>
+<li>Unit tests</li>
+</ul>
+      </section>
+    </div>
+    <footer>
+      <p>Project maintained by <a href="https://github.com/csu">csu</a></p>
+      <p>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></p>
+    </footer>
+    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
+              <script type="text/javascript">
+            var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+            document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+          </script>
+          <script type="text/javascript">
+            try {
+              var pageTracker = _gat._getTracker("UA-50435266-1");
+            pageTracker._trackPageview();
+            } catch(err) {}
+          </script>
+
+  </body>
+</html>
