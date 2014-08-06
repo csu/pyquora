@@ -3,6 +3,9 @@ from bs4 import BeautifulSoup
 import feedparser
 import re
 
+### Configuration ###
+POSSIBLE_FEED_KEYS = ['link', 'id', 'published', 'title', 'summary']
+
 ### Enumerated Types ###
 def enum(*sequential, **named):
     enums = dict(zip(sequential, range(len(sequential))), **named)
@@ -29,7 +32,7 @@ def get_count_for_user_href(soup, user, suffix):
 
 def build_feed_item(item):
     dict = {}
-    keys = ['link', 'id', 'published', 'title', 'summary']
+    keys = POSSIBLE_FEED_KEYS
     for key in keys:
         if key in item.keys():
             dict[key] = item[key]
@@ -117,6 +120,10 @@ class Quora:
                 elif type == ACTIVITY_ITEM_TYPES.QUESTION:
                     activity.questions.append(build_feed_item(entry))
         return activity
+
+    @staticmethod
+    def get_activity_keys():
+        return POSSIBLE_FEED_KEYS
 
 class Activity:
     def __init__(self, upvotes=[], user_follows=[], question_follows=[], answers=[], questions=[]):
