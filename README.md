@@ -15,16 +15,18 @@ Install using pip:
 
 ## Usage
 
-    from quora import Quora, Activity
+```python
+from quora import Quora, Activity
 
-    quora = new Quora()
-    activity = get_activity('Christopher-J-Su')
+quora = new Quora()
+activity = get_activity('Christopher-J-Su')
 
-    # do stuff with the parsed data
-    activity.answers
-    activity.questions
-    activity.upvotes
-    activity.question_follows
+# do stuff with the parsed data
+activity.answers
+activity.questions
+activity.upvotes
+activity.question_follows
+```
 
 ## Features
 ### Currently implemented
