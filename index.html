@@ -1,38 +1,50 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
+
   <head>
-    <meta charset="utf-8">
+    <meta charset='utf-8'>
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <title>pyquora by csu</title>
+    <meta name="description" content="pyquora : A Python module for fetching and parsing data from Quora.">
 
-    <link rel="stylesheet" href="stylesheets/styles.css">
-    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
-    <script src="javascripts/scale.fix.js"></script>
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
 
-    <!--[if lt IE 9]>
-    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
+    <title>pyquora</title>
   </head>
+
   <body>
-    <div class="wrapper">
-      <header>
-        <h1>pyquora</h1>
-        <p>A Python module for fetching and parsing data from Quora.</p>
-        <p class="view"><a href="https://github.com/csu/pyquora">View the Project on GitHub <small>csu/pyquora</small></a></p>
-        <ul>
-          <li><a href="https://github.com/csu/pyquora/zipball/master">Download <strong>ZIP File</strong></a></li>
-          <li><a href="https://github.com/csu/pyquora/tarball/master">Download <strong>TAR Ball</strong></a></li>
-          <li><a href="https://github.com/csu/pyquora">View On <strong>GitHub</strong></a></li>
-        </ul>
-      </header>
-      <section>
+
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/csu/pyquora">View on GitHub</a>
+
+          <h1 id="project_title">pyquora</h1>
+          <h2 id="project_tagline">A Python module for fetching and parsing data from Quora.</h2>
+
+            <section id="downloads">
+              <a class="zip_download_link" href="https://github.com/csu/pyquora/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/csu/pyquora/tarball/master">Download this project as a tar.gz file</a>
+            </section>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
         <h1>
 <a name="quora" class="anchor" href="#quora"><span class="octicon octicon-link"></span></a>quora</h1>
 
 <p>A Python module to fetch and parse data from Quora.</p>
 
-<h2>
+<h3>
+<a name="projects-built-using-pyquora" class="anchor" href="#projects-built-using-pyquora"><span class="octicon octicon-link"></span></a>Projects built using pyquora</h3>
+
+<ul>
+<li>
+<a href="https://github.com/csu/quora-api"><code>quora-api</code></a> – A REST API for Quora.</li>
+<li>
+<a href="https://github.com/csu/quora-backup"><code>quora-backup</code></a> – A Python package and CLI for backing up Quora data.</li>
+</ul><h2>
 <a name="installation" class="anchor" href="#installation"><span class="octicon octicon-link"></span></a>Installation</h2>
 
 <p>You will need <a href="https://www.python.org/download/">Python 2</a>. <a href="http://pip.readthedocs.org/en/latest/installing.html">pip</a> is recommended for installing dependencies.</p>
@@ -45,17 +57,17 @@
 <h2>
 <a name="usage" class="anchor" href="#usage"><span class="octicon octicon-link"></span></a>Usage</h2>
 
-<pre><code>from quora import Quora, Activity
+<div class="highlight highlight-python"><pre><span class="kn">from</span> <span class="nn">quora</span> <span class="kn">import</span> <span class="n">Quora</span><span class="p">,</span> <span class="n">Activity</span>
 
-quora = new Quora()
-activity = get_activity('Christopher-J-Su')
+<span class="n">quora</span> <span class="o">=</span> <span class="n">new</span> <span class="n">Quora</span><span class="p">()</span>
+<span class="n">activity</span> <span class="o">=</span> <span class="n">get_activity</span><span class="p">(</span><span class="s">'Christopher-J-Su'</span><span class="p">)</span>
 
-# do stuff with the parsed data
-activity.answers
-activity.questions
-activity.upvotes
-activity.question_follows
-</code></pre>
+<span class="c"># do stuff with the parsed data</span>
+<span class="n">activity</span><span class="o">.</span><span class="n">answers</span>
+<span class="n">activity</span><span class="o">.</span><span class="n">questions</span>
+<span class="n">activity</span><span class="o">.</span><span class="n">upvotes</span>
+<span class="n">activity</span><span class="o">.</span><span class="n">question_follows</span>
+</pre></div>
 
 <h2>
 <a name="features" class="anchor" href="#features"><span class="octicon octicon-link"></span></a>Features</h2>
@@ -81,11 +93,15 @@ activity.question_follows
 </ul>
       </section>
     </div>
-    <footer>
-      <p>Project maintained by <a href="https://github.com/csu">csu</a></p>
-      <p>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></p>
-    </footer>
-    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">pyquora maintained by <a href="https://github.com/csu">csu</a></p>
+        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
+      </footer>
+    </div>
+
               <script type="text/javascript">
             var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
             document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
@@ -96,6 +112,7 @@ activity.question_follows
             pageTracker._trackPageview();
             } catch(err) {}
           </script>
+
 
   </body>
 </html>
