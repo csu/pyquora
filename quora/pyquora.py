@@ -86,12 +86,12 @@ class Quora:
             user_dict['name'] = soup.find('h1').find('span', class_='user').string
 
             if soup.find('div', class_="empty_area br10 light") is not None:
-                attributes = ['Followers', 'Following', 'Topics', 'Blogs', 'Posts', 'Questions', 'Answers', 'Reviews', 'Edits']
+                attributes = ['Followers ', 'Following ', 'Followers', 'Following', 'Topics', 'Blogs', 'Posts', 'Questions', 'Answers', 'Reviews', 'Edits']
 
                 for item in soup.findAll('li', class_="tab #"):
                     label = item.find('strong').string
                     if label in attributes:
-                        user_dict[label.lower()] = try_cast(item.find('span').string)
+                        user_dict[label.lower().strip()] = try_cast(item.find('span').string)
             else:
                 attributes_to_href_suffix = {
                     'followers': 'followers',
