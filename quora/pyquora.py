@@ -13,7 +13,7 @@ def enum(*sequential, **named):
     enums['reverse_mapping'] = reverse
     return type('Enum', (), enums)
 
-ACTIVITY_ITEM_TYPES = enum(UPVOTE=1, USER_FOLLOW=2, QUESTION_FOLLOW=3, ANSWER=4, QUESTION=5)
+ACTIVITY_ITEM_TYPES = enum(UPVOTE=1, USER_FOLLOW=2, QUESTION_FOLLOW=3, ANSWER=4, QUESTION=5, REVIEW_REQUEST=6)
 
 ####################################################################
 # Helpers
@@ -50,6 +50,8 @@ def check_activity_type(description):
             return ACTIVITY_ITEM_TYPES.ANSWER
         elif 'added a question' in tag.string:
             return ACTIVITY_ITEM_TYPES.QUESTION
+        elif 'requested reviews.' in tag.string:
+            return ACTIVITY_ITEM_TYPES.REVIEW_REQUEST
         else:  # hopefully.
             return ACTIVITY_ITEM_TYPES.USER_FOLLOW
 
@@ -138,6 +140,8 @@ class Quora:
                     activity.answers.append(build_feed_item(entry))
                 elif type == ACTIVITY_ITEM_TYPES.QUESTION:
                     activity.questions.append(build_feed_item(entry))
+                elif type == ACTIVITY_ITEM_TYPES.REVIEW_REQUEST:
+                    activity.review_requests.append(build_feed_item(entry))
         return activity
 
     @staticmethod
@@ -151,3 +155,4 @@ class Activity:
         self.question_follows = question_follows
         self.answers = answers
         self.questions = questions
+        self.review_requests = review_requests
