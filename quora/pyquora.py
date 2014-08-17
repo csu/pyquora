@@ -25,7 +25,7 @@ def try_cast(s):
         return s
 
 def get_count(element):
-    return try_cast(element.find('span', class_='profile-tab-count').string)
+    return try_cast(element.find('span', class_='profile-tab-count').string.replace(',', ''))
 
 def get_count_for_user_href(soup, user, suffix):
     return get_count(soup.find('a', class_='link_label', href='/' + user + '/' + suffix))
@@ -81,7 +81,7 @@ class Quora:
             for item in soup.find('div', attrs={'class': 'ProfileTabs'}).findAll('li'):
                 for key in classes_to_attributes.keys():
                     if key in item.get("class"):
-                        user_dict[classes_to_attributes[key]] = try_cast(item.find('span').string)
+                        user_dict[classes_to_attributes[key]] = try_cast(item.find('span').string.replace(',', ''))
         else:
             user_dict['name'] = soup.find('h1').find('span', class_='user').string
 
