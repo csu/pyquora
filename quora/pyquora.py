@@ -91,7 +91,7 @@ class Quora:
                 for item in soup.findAll('li', class_="tab #"):
                     label = item.find('strong').string
                     if label in attributes:
-                        user_dict[label.lower().strip()] = try_cast(item.find('span').string)
+                        user_dict[label.lower().strip()] = try_cast(item.find('span').string.replace(',', ''))
             else:
                 attributes_to_href_suffix = {
                     'followers': 'followers',
