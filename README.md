@@ -2,7 +2,7 @@
 
 A Python module to fetch and parse data from Quora.
 
-### Note: pyquora is currently broken because of the recent Quora UI change! Fix coming soon. - July 31, 2014
+### Note: pyquora is currently broken because of the recent Quora UI change! Fix coming soon. - September 2, 2014
 
 ## Installation
 You will need [Python 2](https://www.python.org/download/). [pip](http://pip.readthedocs.org/en/latest/installing.html) is recommended for installing dependencies.
