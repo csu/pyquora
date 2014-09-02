@@ -13,7 +13,7 @@ def enum(*sequential, **named):
     enums['reverse_mapping'] = reverse
     return type('Enum', (), enums)
 
-ACTIVITY_ITEM_TYPES = enum(UPVOTE=1, USER_FOLLOW=2, QUESTION_FOLLOW=3, ANSWER=4, QUESTION=5)
+ACTIVITY_ITEM_TYPES = enum(UPVOTE=1, USER_FOLLOW=2, QUESTION_FOLLOW=3, ANSWER=4, QUESTION=5, REVIEW_REQUEST=6)
 
 ####################################################################
 # Helpers
@@ -25,7 +25,7 @@ def try_cast(s):
         return s
 
 def get_count(element):
-    return try_cast(element.find('span', class_='profile-tab-count').string)
+    return try_cast(element.find('span', class_='profile-tab-count').string.replace(',', ''))
 
 def get_count_for_user_href(soup, user, suffix):
     return get_count(soup.find('a', class_='link_label', href='/' + user + '/' + suffix))
@@ -50,8 +50,13 @@ def check_activity_type(description):
             return ACTIVITY_ITEM_TYPES.ANSWER
         elif 'added a question' in tag.string:
             return ACTIVITY_ITEM_TYPES.QUESTION
+        elif 'requested reviews.' in tag.string:
+            return ACTIVITY_ITEM_TYPES.REVIEW_REQUEST
         else:  # hopefully.
             return ACTIVITY_ITEM_TYPES.USER_FOLLOW
+
+def is_new_ui(soup):
+    return soup.find('div', attrs={'class': 'ProfileTabs'}) is not None
 
 ####################################################################
 # API
@@ -61,32 +66,48 @@ class Quora:
     @staticmethod
     def get_user_stats(user):
         soup = BeautifulSoup(requests.get('http://www.quora.com/' + user).text)
-        user_dict = { 'username': user }
-        user_dict['name'] = soup.find('h1').find('span', class_='user').string
+        user_dict = {'username': user}
 
-        if soup.find('div', class_="empty_area br10 light") is not None:
-            attributes = ['Followers', 'Following', 'Topics', 'Blogs', 'Posts', 'Questions', 'Answers', 'Reviews', 'Edits']
-
-            for item in soup.findAll('li', class_="tab #"):
-                label = item.find('strong').string
-                if label in attributes:
-                    user_dict[label.lower()] = try_cast(item.find('span').string)
-        else:
-            attributes_to_href_suffix = {
-                'followers': 'followers',
-                'following': 'following',
-                'topics': 'topics',
-                'blogs': 'blogs',
-                'posts': 'all_posts',
-                'questions': 'questions',
-                'answers': 'answers',
-                'edits': 'log'
+        if is_new_ui(soup):
+            classes_to_attributes = {
+                'ProfileTabsFollowers': 'followers',
+                'ProfileTabsFollowing': 'following',
+                'ProfileTabsQuestions': 'questions',
+                'ProfileTabsAnswers': 'answers',
+                'ProfileTabsPosts': 'posts',
+                'ProfileTabsReviews': 'reviews',
+                'ProfileTabsOperations': 'edits'
             }
-            for attribute, suffix in attributes_to_href_suffix.iteritems():
-                try:
-                    user_dict[attribute] = get_count_for_user_href(soup, user, suffix)
-                except:
-                    pass
+            for item in soup.find('div', attrs={'class': 'ProfileTabs'}).findAll('li'):
+                for key in classes_to_attributes.keys():
+                    if key in item.get("class"):
+                        user_dict[classes_to_attributes[key]] = try_cast(item.find('span').string.replace(',', ''))
+        else:
+            user_dict['name'] = soup.find('h1').find('span', class_='user').string
+
+            if soup.find('div', class_="empty_area br10 light") is not None:
+                attributes = ['Followers ', 'Following ', 'Followers', 'Following', 'Topics', 'Blogs', 'Posts', 'Questions', 'Answers', 'Reviews', 'Edits']
+
+                for item in soup.findAll('li', class_="tab #"):
+                    label = item.find('strong').string
+                    if label in attributes:
+                        user_dict[label.lower().strip()] = try_cast(item.find('span').string.replace(',', ''))
+            else:
+                attributes_to_href_suffix = {
+                    'followers': 'followers',
+                    'following': 'following',
+                    'topics': 'topics',
+                    'blogs': 'blogs',
+                    'posts': 'all_posts',
+                    'questions': 'questions',
+                    'answers': 'answers',
+                    'edits': 'log'
+                }
+                for attribute, suffix in attributes_to_href_suffix.iteritems():
+                    try:
+                        user_dict[attribute] = get_count_for_user_href(soup, user, suffix)
+                    except:
+                        pass
         return user_dict
 
     @staticmethod
@@ -119,6 +140,8 @@ class Quora:
                     activity.answers.append(build_feed_item(entry))
                 elif type == ACTIVITY_ITEM_TYPES.QUESTION:
                     activity.questions.append(build_feed_item(entry))
+                elif type == ACTIVITY_ITEM_TYPES.REVIEW_REQUEST:
+                    activity.review_requests.append(build_feed_item(entry))
         return activity
 
     @staticmethod
@@ -126,9 +149,10 @@ class Quora:
         return POSSIBLE_FEED_KEYS
 
 class Activity:
-    def __init__(self, upvotes=[], user_follows=[], question_follows=[], answers=[], questions=[]):
+    def __init__(self, upvotes=[], user_follows=[], question_follows=[], answers=[], questions=[], review_requests=[]):
         self.upvotes = upvotes
         self.user_follows = user_follows
         self.question_follows = question_follows
         self.answers = answers
         self.questions = questions
+        self.review_requests = review_requests

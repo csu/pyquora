@@ -2,7 +2,13 @@
 
 A Python module to fetch and parse data from Quora.
 
+<<<<<<< HEAD
 ### Note: pyquora is currently broken because of the recent Quora UI change! Fix coming soon. - September 2, 2014
+=======
+### Projects built using pyquora
+* [`quora-api`](https://github.com/csu/quora-api) – A REST API for Quora.
+* [`quora-backup`](https://github.com/csu/quora-backup) – A Python package and CLI for backing up Quora data.
+>>>>>>> 670e6b9799c218d4e3b131dfdf8aa4d48913d54a
 
 ## Installation
 You will need [Python 2](https://www.python.org/download/). [pip](http://pip.readthedocs.org/en/latest/installing.html) is recommended for installing dependencies.
@@ -13,16 +19,18 @@ Install using pip:
 
 ## Usage
 
-    from quora import Quora, Activity
+```python
+from quora import Quora, Activity
 
-    quora = new Quora()
-    activity = get_activity('Christopher-J-Su')
+quora = new Quora()
+activity = get_activity('Christopher-J-Su')
 
-    # do stuff with the parsed data
-    activity.answers
-    activity.questions
-    activity.upvotes
-    activity.question_follows
+# do stuff with the parsed data
+activity.answers
+activity.questions
+activity.upvotes
+activity.question_follows
+```
 
 ## Features
 ### Currently implemented
