@@ -74,16 +74,16 @@ class Quora:
             element = ''.join(m)
             data_stats.append(element)
 
-        user_dict = {'answers' : data_stats[1],
-                     'blogs' : err,
-                     'edits' : data_stats[5],
+        user_dict = {'answers'   : data_stats[1],
+                     'blogs'     : err,
+                     'edits'     : data_stats[5],
                      'followers' : data_stats[3],
                      'following' : data_stats[4],
-                     'name' : user,
-                     'posts' : data_stats[2],
+                     'name'      : user,
+                     'posts'     : data_stats[2],
                      'questions' : data_stats[0],
-                     'topics' : err,
-                     'username' : user }
+                     'topics'    : err,
+                     'username'  : user }
         return user_dict
 
     @staticmethod
