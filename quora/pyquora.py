@@ -66,48 +66,24 @@ class Quora:
     @staticmethod
     def get_user_stats(user):
         soup = BeautifulSoup(requests.get('http://www.quora.com/' + user).text)
-        user_dict = {'username': user}
+        data_stats = []
+        err = 'no data'
 
-        if is_new_ui(soup):
-            classes_to_attributes = {
-                'ProfileTabsFollowers': 'followers',
-                'ProfileTabsFollowing': 'following',
-                'ProfileTabsQuestions': 'questions',
-                'ProfileTabsAnswers': 'answers',
-                'ProfileTabsPosts': 'posts',
-                'ProfileTabsReviews': 'reviews',
-                'ProfileTabsOperations': 'edits'
-            }
-            for item in soup.find('div', attrs={'class': 'ProfileTabs'}).findAll('li'):
-                for key in classes_to_attributes.keys():
-                    if key in item.get("class"):
-                        user_dict[classes_to_attributes[key]] = try_cast(item.find('span').string.replace(',', ''))
-        else:
-            user_dict['name'] = soup.find('h1').find('span', class_='user').string
+        for item in soup.findAll('span', attrs={'class' : 'profile_count'}):
+            m = re.findall('\d', str(item))
+            element = ''.join(m)
+            data_stats.append(element)
 
-            if soup.find('div', class_="empty_area br10 light") is not None:
-                attributes = ['Followers ', 'Following ', 'Followers', 'Following', 'Topics', 'Blogs', 'Posts', 'Questions', 'Answers', 'Reviews', 'Edits']
-
-                for item in soup.findAll('li', class_="tab #"):
-                    label = item.find('strong').string
-                    if label in attributes:
-                        user_dict[label.lower().strip()] = try_cast(item.find('span').string.replace(',', ''))
-            else:
-                attributes_to_href_suffix = {
-                    'followers': 'followers',
-                    'following': 'following',
-                    'topics': 'topics',
-                    'blogs': 'blogs',
-                    'posts': 'all_posts',
-                    'questions': 'questions',
-                    'answers': 'answers',
-                    'edits': 'log'
-                }
-                for attribute, suffix in attributes_to_href_suffix.iteritems():
-                    try:
-                        user_dict[attribute] = get_count_for_user_href(soup, user, suffix)
-                    except:
-                        pass
+        user_dict = {'answers'   : data_stats[1],
+                     'blogs'     : err,
+                     'edits'     : data_stats[5],
+                     'followers' : data_stats[3],
+                     'following' : data_stats[4],
+                     'name'      : user,
+                     'posts'     : data_stats[2],
+                     'questions' : data_stats[0],
+                     'topics'    : err,
+                     'username'  : user }
         return user_dict
 
     @staticmethod
