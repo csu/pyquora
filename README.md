@@ -2,8 +2,6 @@
 
 A Python module to fetch and parse data from Quora.
 
-### Note: pyquora is currently broken because of the recent Quora UI change! Fix coming soon. - September 2, 2014
-
 ### Projects built using pyquora
 * [`quora-api`](https://github.com/csu/quora-api) – A REST API for Quora.
 * [`quora-backup`](https://github.com/csu/quora-backup) – A Python package and CLI for backing up Quora data.
