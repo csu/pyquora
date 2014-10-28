@@ -38,3 +38,7 @@ activity.question_follows
 * Questions and answers
 * Detailed user information (followers, following, etc.; not just statistics)
 * Unit tests
+
+## Related Projects
+* [quora-api](https://github.com/csu/quora-api)
+* [quora-backup](https://github.com/csu/quora-backup)

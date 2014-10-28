@@ -1,3 +1,4 @@
+v0.1.9, 27 October 2014 -- Bugfix for casting.
 v0.1.8, 27 October 2014 -- Updated to work with recent Quora UI changes.
 v0.1.7, 10 August 2014 -- Remove commas from values to fix casting.
 v0.1.6, 10 August 2014 -- Bugfix for key
