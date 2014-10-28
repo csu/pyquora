@@ -19,6 +19,8 @@ Install using pip:
 from quora import Quora, Activity
 
 quora = new Quora()
+
+# get user activity
 activity = get_activity('Christopher-J-Su')
 
 # do stuff with the parsed data
@@ -26,6 +28,12 @@ activity.answers
 activity.questions
 activity.upvotes
 activity.question_follows
+
+# get user statistics
+stats = quora.get_user_stats('Christopher-J-Su')
+
+# take a gander
+print stats
 ```
 
 ## Features
