@@ -62,6 +62,8 @@
 <div class="highlight highlight-python"><pre><span class="kn">from</span> <span class="nn">quora</span> <span class="kn">import</span> <span class="n">Quora</span><span class="p">,</span> <span class="n">Activity</span>
 
 <span class="n">quora</span> <span class="o">=</span> <span class="n">new</span> <span class="n">Quora</span><span class="p">()</span>
+
+<span class="c"># get user activity</span>
 <span class="n">activity</span> <span class="o">=</span> <span class="n">get_activity</span><span class="p">(</span><span class="s">'Christopher-J-Su'</span><span class="p">)</span>
 
 <span class="c"># do stuff with the parsed data</span>
@@ -69,6 +71,12 @@
 <span class="n">activity</span><span class="o">.</span><span class="n">questions</span>
 <span class="n">activity</span><span class="o">.</span><span class="n">upvotes</span>
 <span class="n">activity</span><span class="o">.</span><span class="n">question_follows</span>
+
+<span class="c"># get user statistics</span>
+<span class="n">stats</span> <span class="o">=</span> <span class="n">quora</span><span class="o">.</span><span class="n">get_user_stats</span><span class="p">(</span><span class="s">'Christopher-J-Su'</span><span class="p">)</span>
+
+<span class="c"># take a gander</span>
+<span class="k">print</span> <span class="n">stats</span>
 </pre></div>
 
 <h2>
