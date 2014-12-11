@@ -24,6 +24,9 @@ def try_cast(s):
     except ValueError:
         return s
 
+def render_name(user):
+    return user.replace('-', ' ')
+
 def get_count(element):
     return try_cast(element.find('span', class_='profile-tab-count').string.replace(',', ''))
 
@@ -79,7 +82,7 @@ class Quora:
                      'edits'     : try_cast(data_stats[5]),
                      'followers' : try_cast(data_stats[3]),
                      'following' : try_cast(data_stats[4]),
-                     'name'      : user,
+                     'name'      : render_name(user),
                      'posts'     : try_cast(data_stats[2]),
                      'questions' : try_cast(data_stats[0]),
                      'topics'    : err,
