@@ -24,8 +24,8 @@ def try_cast(s):
     except ValueError:
         return s
 
-def render_name(user):
-    return user.replace('-', ' ')
+def get_name(source):
+    return str(source.find('span', attrs={'class' : 'user'}).string)
 
 def get_count(element):
     return try_cast(element.find('span', class_='profile-tab-count').string.replace(',', ''))
@@ -70,6 +70,7 @@ class Quora:
     def get_user_stats(user):
         soup = BeautifulSoup(requests.get('http://www.quora.com/' + user).text)
         data_stats = []
+        name = get_name(soup)
         err = None
 
         for item in soup.findAll('span', attrs={'class' : 'profile_count'}):
@@ -82,7 +83,7 @@ class Quora:
                      'edits'     : try_cast(data_stats[5]),
                      'followers' : try_cast(data_stats[3]),
                      'following' : try_cast(data_stats[4]),
-                     'name'      : render_name(user),
+                     'name'      : name,
                      'posts'     : try_cast(data_stats[2]),
                      'questions' : try_cast(data_stats[0]),
                      'topics'    : err,
