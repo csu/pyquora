@@ -2,10 +2,10 @@ from distutils.core import setup
 
 setup(
     name='quora',
-    version='0.1.9',
+    version='0.1.10',
     description='Fetches and parses data from Quora.',
     author='Christopher Su',
-    author_email='christophersu9@gmail.com',
+    author_email='chris+gh@christopher.su',
     url='https://github.com/csu/pyquora',
     packages=['quora'],
     install_requires=[
@@ -13,4 +13,4 @@ setup(
         "feedparser == 5.1.3",
         "requests==2.3.0"
     ]
-    )
+)
