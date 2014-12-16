@@ -75,9 +75,9 @@ def check_activity_type(entry):
         return ACTIVITY_ITEM_TYPES.WANT_ANSWER
     elif description is None:
         return ACTIVITY_ITEM_TYPES.USER_FOLLOW
-    if is_review(link):
+    elif is_review(link):
         return ACTIVITY_ITEM_TYPES.REVIEW_REQUEST
-    if is_author(link, base_url):
+    elif is_author(link, base_url):
         return ACTIVITY_ITEM_TYPES.ANSWER
     else:
         return ACTIVITY_ITEM_TYPES.UPVOTE
