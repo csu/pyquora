@@ -47,11 +47,12 @@ def want_answers(description):
     else:
         return False
     
-def is_upvote(link, baseurl):
+def is_author(link, baseurl):
     if link.string is not None and baseurl.string is not None:
         link_username = str(re.search('[a-zA-Z]*\-+[a-zA-Z]*-?[0-9]*$', link.string).group(0))
         extracted_username = str(re.search('(com*\/)[a-zA-Z]*\-+[a-zA-Z]*-?[0-9]*(\/rss)$', baseurl.string).group(0))
-        return extracted_username == link_username and (link_username is not None) and (extracted_username is not None):
+        if link_username is not None and extracted_username is not None:
+            return extracted_username == link_username
     else:
         return False
         
@@ -71,10 +72,10 @@ def check_activity_type(entry):
     link     = BeautifulSoup(entry['link'])
     base_url = str(entry['summary_detail']['base'])
 
-    if want_answers(tag):
-        return ACTIVITY_ITEM_TYPES.WANT_ANSWER
-    elif description is None:
+    if description is None:
         return ACTIVITY_ITEM_TYPES.USER_FOLLOW
+    elif want_answers(tag):
+        return ACTIVITY_ITEM_TYPES.WANT_ANSWER
     elif is_review(link):
         return ACTIVITY_ITEM_TYPES.REVIEW_REQUEST
     elif is_author(link, base_url):
