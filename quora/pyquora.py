@@ -13,7 +13,7 @@ def enum(*sequential, **named):
     enums['reverse_mapping'] = reverse
     return type('Enum', (), enums)
 
-ACTIVITY_ITEM_TYPES = enum(UPVOTE=1, USER_FOLLOW=2, WANT_ANSWER=3, ANSWER=4, QUESTION=5, REVIEW_REQUEST=6)
+ACTIVITY_ITEM_TYPES = enum(UPVOTE=1, USER_FOLLOW=2, WANT_ANSWER=3, ANSWER=4, REVIEW_REQUEST=5)
 
 ####################################################################
 # Helpers
@@ -47,39 +47,41 @@ def want_answers(description):
     else:
         return False
     
-def username_correspond(link, baseurl):
-    if link is not None and baseurl is not None:
+def is_upvote(link, baseurl):
+    if link.string is not None and baseurl.string is not None:
         link_username = str(re.search('[a-zA-Z]*\-+[a-zA-Z]*-?[0-9]*$', link.string).group(0))
-        extracted_username = str(re.search('(com*\/)[a-zA-Z]*\-+[a-zA-Z]*-?[0-9]*(\/rss)$', link.string).group(0))
-        return extracted_username == link_username:
-    else
+        extracted_username = str(re.search('(com*\/)[a-zA-Z]*\-+[a-zA-Z]*-?[0-9]*(\/rss)$', baseurl.string).group(0))
+        return extracted_username == link_username and (link_username is not None) and (extracted_username is not None):
+    else:
+        return False
+        
+def is_review(link):
+    if link.string is not None:
+        match = re.match('^(https?:\/\/w{0,3}.?quora.com\/)(Reviews-of)([a-zA-Z0-9-\-])*', link.string)
+        if match is not None:
+            return match.group(2) == "Reviews-of"
+        else:
+            return False
+    else:
         return False
 
 def check_activity_type(entry):
-    
     description = BeautifulSoup(entry['description'])
     tag  = description.find('span', id = re.compile('^[a-z]*_+[a-z]*_+[0-9]*$'))
-
-    if want_answers(tag):
-            return ACTIVITY_ITEM_TYPES.WANT_ANSWER
-
     link     = BeautifulSoup(entry['link'])
     base_url = str(entry['summary_detail']['base'])
-    
-    if username_correspond(link, base_url):
+
+    if want_answers(tag):
+        return ACTIVITY_ITEM_TYPES.WANT_ANSWER
+    elif description is None:
+        return ACTIVITY_ITEM_TYPES.USER_FOLLOW
+    if is_review(link):
+        return ACTIVITY_ITEM_TYPES.REVIEW_REQUEST
+    if is_author(link, base_url):
         return ACTIVITY_ITEM_TYPES.ANSWER
     else:
         return ACTIVITY_ITEM_TYPES.UPVOTE
 
-        elif 'added this answer' in tag.string:
-            return ACTIVITY_ITEM_TYPES.ANSWER
-        elif 'added a question' in tag.string:
-            return ACTIVITY_ITEM_TYPES.QUESTION
-        elif 'requested reviews.' in tag.string:
-            return ACTIVITY_ITEM_TYPES.REVIEW_REQUEST
-        else:  # hopefully.
-            return ACTIVITY_ITEM_TYPES.USER_FOLLOW
-'''
 def is_new_ui(soup):
     return soup.find('div', attrs={'class': 'ProfileTabs'}) is not None
 
@@ -130,7 +132,7 @@ class Quora:
         f = feedparser.parse('http://www.quora.com/' + user + '/rss')
         activity = Activity()
         for entry in f.entries:
-            type = check_activity_type(entry['description'])
+            type = check_activity_type(entry)
             if type is not None:
                 if type == ACTIVITY_ITEM_TYPES.UPVOTE:
                     activity.upvotes.append(build_feed_item(entry))
@@ -140,8 +142,6 @@ class Quora:
                     activity.want_answers.append(build_feed_item(entry))
                 elif type == ACTIVITY_ITEM_TYPES.ANSWER:
                     activity.answers.append(build_feed_item(entry))
-                elif type == ACTIVITY_ITEM_TYPES.QUESTION:
-                    activity.questions.append(build_feed_item(entry))
                 elif type == ACTIVITY_ITEM_TYPES.REVIEW_REQUEST:
                     activity.review_requests.append(build_feed_item(entry))
         return activity
@@ -151,10 +151,9 @@ class Quora:
         return POSSIBLE_FEED_KEYS
 
 class Activity:
-    def __init__(self, upvotes=[], user_follows=[], want_answers=[], answers=[], questions=[], review_requests=[]):
+    def __init__(self, upvotes=[], user_follows=[], want_answers=[], answers=[], review_requests=[]):
         self.upvotes = upvotes
         self.user_follows = user_follows
         self.question_follows = question_follows
         self.answers = answers
-        self.questions = questions
         self.review_requests = review_requests
