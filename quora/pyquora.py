@@ -41,14 +41,36 @@ def build_feed_item(item):
             dict[key] = item[key]
     return dict
 
-def check_activity_type(description):
-    soup = BeautifulSoup(description)
-    tag = soup.find('div', style="color: #666666;")
-    if tag is not None:
-        if 'voted up this' in tag.string:
-            return ACTIVITY_ITEM_TYPES.UPVOTE
-        elif 'followed a question' in tag.string:
+def want_answers(description):
+    if description is not None:
+        return re.match('^[0-9]* +Answers$|^1+ +Answer$', description.string)
+    else:
+        return False
+    
+def username_correspond(link, baseurl):
+    if link is not None and baseurl is not None:
+        link_username = str(re.search('[a-zA-Z]*\-+[a-zA-Z]*-?[0-9]*$', link.string).group(0))
+        extracted_username = str(re.search('(com*\/)[a-zA-Z]*\-+[a-zA-Z]*-?[0-9]*(\/rss)$', link.string).group(0))
+        return extracted_username == link_username:
+    else
+        return False
+
+def check_activity_type(entry):
+    
+    description = BeautifulSoup(entry['description'])
+    tag  = description.find('span', id = re.compile('^[a-z]*_+[a-z]*_+[0-9]*$'))
+
+    if want_answers(tag):
             return ACTIVITY_ITEM_TYPES.WANT_ANSWER
+
+    link     = BeautifulSoup(entry['link'])
+    base_url = str(entry['summary_detail']['base'])
+    
+    if username_correspond(link, base_url):
+        return ACTIVITY_ITEM_TYPES.ANSWER
+    else:
+        return ACTIVITY_ITEM_TYPES.UPVOTE
+
         elif 'added this answer' in tag.string:
             return ACTIVITY_ITEM_TYPES.ANSWER
         elif 'added a question' in tag.string:
@@ -57,7 +79,7 @@ def check_activity_type(description):
             return ACTIVITY_ITEM_TYPES.REVIEW_REQUEST
         else:  # hopefully.
             return ACTIVITY_ITEM_TYPES.USER_FOLLOW
-
+'''
 def is_new_ui(soup):
     return soup.find('div', attrs={'class': 'ProfileTabs'}) is not None
 
