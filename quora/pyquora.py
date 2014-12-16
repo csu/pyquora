@@ -13,7 +13,7 @@ def enum(*sequential, **named):
     enums['reverse_mapping'] = reverse
     return type('Enum', (), enums)
 
-ACTIVITY_ITEM_TYPES = enum(UPVOTE=1, USER_FOLLOW=2, QUESTION_FOLLOW=3, ANSWER=4, QUESTION=5, REVIEW_REQUEST=6)
+ACTIVITY_ITEM_TYPES = enum(UPVOTE=1, USER_FOLLOW=2, WANT_ANSWER=3, ANSWER=4, QUESTION=5, REVIEW_REQUEST=6)
 
 ####################################################################
 # Helpers
@@ -48,7 +48,7 @@ def check_activity_type(description):
         if 'voted up this' in tag.string:
             return ACTIVITY_ITEM_TYPES.UPVOTE
         elif 'followed a question' in tag.string:
-            return ACTIVITY_ITEM_TYPES.QUESTION_FOLLOW
+            return ACTIVITY_ITEM_TYPES.WANT_ANSWER
         elif 'added this answer' in tag.string:
             return ACTIVITY_ITEM_TYPES.ANSWER
         elif 'added a question' in tag.string:
@@ -114,8 +114,8 @@ class Quora:
                     activity.upvotes.append(build_feed_item(entry))
                 elif type == ACTIVITY_ITEM_TYPES.USER_FOLLOW:
                     activity.user_follows.append(build_feed_item(entry))
-                elif type == ACTIVITY_ITEM_TYPES.QUESTION_FOLLOW:
-                    activity.question_follows.append(build_feed_item(entry))
+                elif type == ACTIVITY_ITEM_TYPES.WANT_ANSWER:
+                    activity.want_answers.append(build_feed_item(entry))
                 elif type == ACTIVITY_ITEM_TYPES.ANSWER:
                     activity.answers.append(build_feed_item(entry))
                 elif type == ACTIVITY_ITEM_TYPES.QUESTION:
@@ -129,7 +129,7 @@ class Quora:
         return POSSIBLE_FEED_KEYS
 
 class Activity:
-    def __init__(self, upvotes=[], user_follows=[], question_follows=[], answers=[], questions=[], review_requests=[]):
+    def __init__(self, upvotes=[], user_follows=[], want_answers=[], answers=[], questions=[], review_requests=[]):
         self.upvotes = upvotes
         self.user_follows = user_follows
         self.question_follows = question_follows
