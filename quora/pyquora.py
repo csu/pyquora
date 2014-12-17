@@ -13,7 +13,7 @@ def enum(*sequential, **named):
     enums['reverse_mapping'] = reverse
     return type('Enum', (), enums)
 
-ACTIVITY_ITEM_TYPES = enum(UPVOTE=1, USER_FOLLOW=2, QUESTION_FOLLOW=3, ANSWER=4, QUESTION=5, REVIEW_REQUEST=6)
+ACTIVITY_ITEM_TYPES = enum(UPVOTE=1, USER_FOLLOW=2, WANT_ANSWER=3, ANSWER=4, REVIEW_REQUEST=5)
 
 ####################################################################
 # Helpers
@@ -41,22 +41,49 @@ def build_feed_item(item):
             dict[key] = item[key]
     return dict
 
-def check_activity_type(description):
-    soup = BeautifulSoup(description)
-    tag = soup.find('div', style="color: #666666;")
+def want_answers(description):
+    tag  = description.find('span', id = re.compile('^[a-z]*_+[a-z]*_+[0-9]*$'))
     if tag is not None:
-        if 'voted up this' in tag.string:
-            return ACTIVITY_ITEM_TYPES.UPVOTE
-        elif 'followed a question' in tag.string:
-            return ACTIVITY_ITEM_TYPES.QUESTION_FOLLOW
-        elif 'added this answer' in tag.string:
-            return ACTIVITY_ITEM_TYPES.ANSWER
-        elif 'added a question' in tag.string:
-            return ACTIVITY_ITEM_TYPES.QUESTION
-        elif 'requested reviews.' in tag.string:
-            return ACTIVITY_ITEM_TYPES.REVIEW_REQUEST
-        else:  # hopefully.
-            return ACTIVITY_ITEM_TYPES.USER_FOLLOW
+        return True
+    else:
+        return False
+    
+def is_author(link, baseurl):
+    author = re.search('[a-zA-Z]*\-+[a-zA-Z]*-?[0-9]*$', link)
+    user   = re.search('com*\/([a-zA-Z]*\-+[a-zA-Z]*-?[0-9]*)\/rss$', baseurl)
+    if user is not None and author is not None:
+        author = author.group(0)
+        user   = user.group(1)
+        return author == user
+    else:
+        return False
+
+
+def is_review(link):
+    if link is not None:
+        match = re.search('^https?:\/\/www\.?quora.com\/Reviews-of[a-zA-Z0-9-\-]*$', link)
+        if match is not None:
+            return True
+        else:
+            return False
+    else:
+        return False
+
+def check_activity_type(entry):
+    description = BeautifulSoup(entry['description'])
+    link        = entry['link']
+    base_url    = entry['summary_detail']['base']
+
+    if entry['description'] == '':
+        return ACTIVITY_ITEM_TYPES.USER_FOLLOW
+    elif is_review(link) is True:
+        return ACTIVITY_ITEM_TYPES.REVIEW_REQUEST
+    elif want_answers(description) is True:
+        return ACTIVITY_ITEM_TYPES.WANT_ANSWER
+    elif is_author(link, base_url) is True:
+        return ACTIVITY_ITEM_TYPES.ANSWER
+    else:
+        return ACTIVITY_ITEM_TYPES.UPVOTE
 
 def is_new_ui(soup):
     return soup.find('div', attrs={'class': 'ProfileTabs'}) is not None
@@ -108,18 +135,16 @@ class Quora:
         f = feedparser.parse('http://www.quora.com/' + user + '/rss')
         activity = Activity()
         for entry in f.entries:
-            type = check_activity_type(entry['description'])
+            type = check_activity_type(entry)
             if type is not None:
                 if type == ACTIVITY_ITEM_TYPES.UPVOTE:
                     activity.upvotes.append(build_feed_item(entry))
                 elif type == ACTIVITY_ITEM_TYPES.USER_FOLLOW:
                     activity.user_follows.append(build_feed_item(entry))
-                elif type == ACTIVITY_ITEM_TYPES.QUESTION_FOLLOW:
-                    activity.question_follows.append(build_feed_item(entry))
+                elif type == ACTIVITY_ITEM_TYPES.WANT_ANSWER:
+                    activity.want_answers.append(build_feed_item(entry))
                 elif type == ACTIVITY_ITEM_TYPES.ANSWER:
                     activity.answers.append(build_feed_item(entry))
-                elif type == ACTIVITY_ITEM_TYPES.QUESTION:
-                    activity.questions.append(build_feed_item(entry))
                 elif type == ACTIVITY_ITEM_TYPES.REVIEW_REQUEST:
                     activity.review_requests.append(build_feed_item(entry))
         return activity
@@ -129,10 +154,9 @@ class Quora:
         return POSSIBLE_FEED_KEYS
 
 class Activity:
-    def __init__(self, upvotes=[], user_follows=[], question_follows=[], answers=[], questions=[], review_requests=[]):
+    def __init__(self, upvotes=[], user_follows=[], want_answers=[], answers=[], review_requests=[]):
         self.upvotes = upvotes
         self.user_follows = user_follows
         self.question_follows = question_follows
         self.answers = answers
-        self.questions = questions
         self.review_requests = review_requests
