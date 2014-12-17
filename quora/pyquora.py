@@ -42,25 +42,28 @@ def build_feed_item(item):
     return dict
 
 def want_answers(description):
-    if description is not None:
-        return re.match('^[0-9]* +Answers$|^1+ +Answer$', description.string)
+    tag  = description.find('span', id = re.compile('^[a-z]*_+[a-z]*_+[0-9]*$'))
+    if tag is not None:
+        return True
     else:
         return False
     
 def is_author(link, baseurl):
-    if link.string is not None and baseurl.string is not None:
-        link_username = str(re.search('[a-zA-Z]*\-+[a-zA-Z]*-?[0-9]*$', link.string).group(0))
-        extracted_username = str(re.search('(com*\/)[a-zA-Z]*\-+[a-zA-Z]*-?[0-9]*(\/rss)$', baseurl.string).group(0))
-        if link_username is not None and extracted_username is not None:
-            return extracted_username == link_username
+    author = re.search('[a-zA-Z]*\-+[a-zA-Z]*-?[0-9]*$', link)
+    user   = re.search('com*\/([a-zA-Z]*\-+[a-zA-Z]*-?[0-9]*)\/rss$', baseurl)
+    if user is not None and author is not None:
+        author = author.group(0)
+        user   = user.group(1)
+        return author == user
     else:
         return False
-        
+
+
 def is_review(link):
-    if link.string is not None:
-        match = re.match('^(https?:\/\/w{0,3}.?quora.com\/)(Reviews-of)([a-zA-Z0-9-\-])*', link.string)
+    if link is not None:
+        match = re.search('^https?:\/\/www\.?quora.com\/Reviews-of[a-zA-Z0-9-\-]*$', link)
         if match is not None:
-            return match.group(2) == "Reviews-of"
+            return True
         else:
             return False
     else:
@@ -68,17 +71,16 @@ def is_review(link):
 
 def check_activity_type(entry):
     description = BeautifulSoup(entry['description'])
-    tag  = description.find('span', id = re.compile('^[a-z]*_+[a-z]*_+[0-9]*$'))
-    link     = BeautifulSoup(entry['link'])
-    base_url = str(entry['summary_detail']['base'])
+    link        = entry['link']
+    base_url    = entry['summary_detail']['base']
 
-    if description is None:
+    if entry['description'] == '':
         return ACTIVITY_ITEM_TYPES.USER_FOLLOW
-    elif want_answers(tag):
-        return ACTIVITY_ITEM_TYPES.WANT_ANSWER
-    elif is_review(link):
+    elif is_review(link) is True:
         return ACTIVITY_ITEM_TYPES.REVIEW_REQUEST
-    elif is_author(link, base_url):
+    elif want_answers(description) is True:
+        return ACTIVITY_ITEM_TYPES.WANT_ANSWER
+    elif is_author(link, base_url) is True:
         return ACTIVITY_ITEM_TYPES.ANSWER
     else:
         return ACTIVITY_ITEM_TYPES.UPVOTE
