@@ -32,12 +32,12 @@
     <div id="main_content_wrap" class="outer">
       <section id="main_content" class="inner">
         <h1>
-<a name="quora" class="anchor" href="#quora"><span class="octicon octicon-link"></span></a>quora</h1>
+<a id="quora" class="anchor" href="#quora" aria-hidden="true"><span class="octicon octicon-link"></span></a>quora</h1>
 
 <p>A Python module to fetch and parse data from Quora.</p>
 
 <h3>
-<a name="projects-built-using-pyquora" class="anchor" href="#projects-built-using-pyquora"><span class="octicon octicon-link"></span></a>Projects built using pyquora</h3>
+<a id="projects-built-using-pyquora" class="anchor" href="#projects-built-using-pyquora" aria-hidden="true"><span class="octicon octicon-link"></span></a>Projects built using pyquora</h3>
 
 <ul>
 <li>
@@ -47,7 +47,7 @@
 </ul>
 
 <h2>
-<a name="installation" class="anchor" href="#installation"><span class="octicon octicon-link"></span></a>Installation</h2>
+<a id="installation" class="anchor" href="#installation" aria-hidden="true"><span class="octicon octicon-link"></span></a>Installation</h2>
 
 <p>You will need <a href="https://www.python.org/download/">Python 2</a>. <a href="http://pip.readthedocs.org/en/latest/installing.html">pip</a> is recommended for installing dependencies.</p>
 
@@ -57,33 +57,32 @@
 </code></pre>
 
 <h2>
-<a name="usage" class="anchor" href="#usage"><span class="octicon octicon-link"></span></a>Usage</h2>
+<a id="usage" class="anchor" href="#usage" aria-hidden="true"><span class="octicon octicon-link"></span></a>Usage</h2>
 
-<div class="highlight highlight-python"><pre><span class="kn">from</span> <span class="nn">quora</span> <span class="kn">import</span> <span class="n">Quora</span><span class="p">,</span> <span class="n">Activity</span>
+<div class="highlight highlight-python"><pre><span class="pl-k">from</span> quora <span class="pl-k">import</span> Quora, Activity
 
-<span class="n">quora</span> <span class="o">=</span> <span class="n">new</span> <span class="n">Quora</span><span class="p">()</span>
+quora <span class="pl-k">=</span> new Quora()
 
-<span class="c"># get user activity</span>
-<span class="n">activity</span> <span class="o">=</span> <span class="n">get_activity</span><span class="p">(</span><span class="s">'Christopher-J-Su'</span><span class="p">)</span>
+<span class="pl-c"># get user activity</span>
+activity <span class="pl-k">=</span> get_activity(<span class="pl-s1"><span class="pl-pds">'</span>Christopher-J-Su<span class="pl-pds">'</span></span>)
 
-<span class="c"># do stuff with the parsed data</span>
-<span class="n">activity</span><span class="o">.</span><span class="n">answers</span>
-<span class="n">activity</span><span class="o">.</span><span class="n">questions</span>
-<span class="n">activity</span><span class="o">.</span><span class="n">upvotes</span>
-<span class="n">activity</span><span class="o">.</span><span class="n">question_follows</span>
+<span class="pl-c"># do stuff with the parsed data</span>
+activity.upvotes <span class="pl-k">=</span> upvotes
+activity.user_follows
+activity.want_answers
+activity.answers
 
-<span class="c"># get user statistics</span>
-<span class="n">stats</span> <span class="o">=</span> <span class="n">quora</span><span class="o">.</span><span class="n">get_user_stats</span><span class="p">(</span><span class="s">'Christopher-J-Su'</span><span class="p">)</span>
+<span class="pl-c"># get user statistics</span>
+stats <span class="pl-k">=</span> quora.get_user_stats(<span class="pl-s1"><span class="pl-pds">'</span>Christopher-J-Su<span class="pl-pds">'</span></span>)
 
-<span class="c"># take a gander</span>
-<span class="k">print</span> <span class="n">stats</span>
-</pre></div>
+<span class="pl-c"># take a gander</span>
+<span class="pl-k">print</span> stats</pre></div>
 
 <h2>
-<a name="features" class="anchor" href="#features"><span class="octicon octicon-link"></span></a>Features</h2>
+<a id="features" class="anchor" href="#features" aria-hidden="true"><span class="octicon octicon-link"></span></a>Features</h2>
 
 <h3>
-<a name="currently-implemented" class="anchor" href="#currently-implemented"><span class="octicon octicon-link"></span></a>Currently implemented</h3>
+<a id="currently-implemented" class="anchor" href="#currently-implemented" aria-hidden="true"><span class="octicon octicon-link"></span></a>Currently implemented</h3>
 
 <ul>
 <li>User statistics</li>
@@ -96,7 +95,7 @@
 </ul>
 
 <h3>
-<a name="todo" class="anchor" href="#todo"><span class="octicon octicon-link"></span></a>Todo</h3>
+<a id="todo" class="anchor" href="#todo" aria-hidden="true"><span class="octicon octicon-link"></span></a>Todo</h3>
 
 <ul>
 <li>Questions and answers</li>
@@ -105,7 +104,7 @@
 </ul>
 
 <h2>
-<a name="related-projects" class="anchor" href="#related-projects"><span class="octicon octicon-link"></span></a>Related Projects</h2>
+<a id="related-projects" class="anchor" href="#related-projects" aria-hidden="true"><span class="octicon octicon-link"></span></a>Related Projects</h2>
 
 <ul>
 <li><a href="https://github.com/csu/quora-api">quora-api</a></li>
