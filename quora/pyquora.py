@@ -41,7 +41,7 @@ def build_feed_item(item):
             dict[key] = item[key]
     return dict
 
-def want_answers(description):
+def is_want_answer(description):
     tag  = description.find('span', id = re.compile('^[a-z]*_+[a-z]*_+[0-9]*$'))
     if tag is not None:
         return True
@@ -78,7 +78,7 @@ def check_activity_type(entry):
         return ACTIVITY_ITEM_TYPES.USER_FOLLOW
     elif is_review(link) is True:
         return ACTIVITY_ITEM_TYPES.REVIEW_REQUEST
-    elif want_answers(description) is True:
+    elif is_want_answer(description) is True:
         return ACTIVITY_ITEM_TYPES.WANT_ANSWER
     elif is_author(link, base_url) is True:
         return ACTIVITY_ITEM_TYPES.ANSWER
@@ -157,6 +157,6 @@ class Activity:
     def __init__(self, upvotes=[], user_follows=[], want_answers=[], answers=[], review_requests=[]):
         self.upvotes = upvotes
         self.user_follows = user_follows
-        self.question_follows = question_follows
+        self.want_answers = want_answers
         self.answers = answers
         self.review_requests = review_requests
