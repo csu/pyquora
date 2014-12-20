@@ -49,8 +49,8 @@ def is_want_answer(description):
         return False
     
 def is_author(link, baseurl):
-    author = re.search('[a-zA-Z]*\-+[a-zA-Z]*-?[0-9]*$', link)
-    user   = re.search('com*\/([a-zA-Z]*\-+[a-zA-Z]*-?[0-9]*)\/rss$', baseurl)
+    author = re.search('[a-zA-Z-\-]*\-+[a-zA-Z]*-?[0-9]*$', link)
+    user   = re.search('com*\/([a-zA-Z]*\-+[a-zA-Z]*-?[a-z-A-Z-0-9]*)\/rss$', baseurl)
     if user is not None and author is not None:
         author = author.group(0)
         user   = user.group(1)
