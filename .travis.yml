@@ -8,7 +8,8 @@ python:
 install: "pip install -r requirements.txt"
 
 # run tests
-script: python tests/test_all.py
+script: nosetests
+
 branches:
   only:
     - master
