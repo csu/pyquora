@@ -20,3 +20,13 @@ class TestActivity:
         assert self.activity1.want_answers
         assert self.activity2.want_answers
         assert self.activity3.want_answers
+
+    def test_activity_user_follows(self):
+        assert self.activity1.user_follows
+        assert self.activity2.user_follows
+        assert self.activity3.user_follows
+
+    def test_activity_upvotes(self):
+        assert self.activity1.upvotes
+        assert self.activity2.upvotes
+        assert self.activity3.upvotes
