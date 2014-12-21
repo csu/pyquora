@@ -1,3 +1,4 @@
+v0.1.13, 21 December 2014 -- Fix author regex.
 v0.1.12, 19 December 2014 -- Method organization.
 v0.1.11, 17 December 2014 -- Fix user activity to work with latest Quora changes.
 v0.1.10, 11 December 2014 -- Bugfix for full name in user statistics.

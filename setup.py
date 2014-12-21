@@ -2,7 +2,7 @@ from distutils.core import setup
 
 setup(
     name='quora',
-    version='0.1.12',
+    version='0.1.13',
     description='Fetches and parses data from Quora.',
     author='Christopher Su',
     author_email='chris+gh@christopher.su',

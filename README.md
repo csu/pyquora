@@ -28,6 +28,7 @@ activity.upvotes = upvotes
 activity.user_follows
 activity.want_answers
 activity.answers
+activity.review_requests
 
 # get user statistics
 stats = quora.get_user_stats('Christopher-J-Su')
