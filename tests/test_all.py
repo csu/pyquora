@@ -1,13 +1,15 @@
-import quora
+from quora import Quora, Activity
+from nose import with_setup
 
 class TestActivity:
+    quoraObj = Quora()
+    activity1 = quoraObj.get_activity('Christopher-J-Su')
+    activity2 = quoraObj.get_activity('Aaron-Ounn')
+    activity3 = quoraObj.get_activity('Jennifer-Apacible-1')
 
     @classmethod
     def setup_class(cls):
-        self.quora = Quora()
-        self.activity1 = quora.get_activity('Christopher-J-Su')
-        self.activity2 = quora.get_activity('Aaron-Ounn')
-        self.activity3 = quora.get_activity('Jennifer-Apacible-1')
+        print "Setup here"
 
     def test_activity_answers(self):
         assert self.activity1.answers
