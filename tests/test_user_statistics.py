@@ -16,7 +16,14 @@ class TestActivity:
         print "Setup here"
 
     def test_exists(self):
-        print "Placeholder"
+        for stat in self.test_stats:
+            assert stat['answers']
+            assert stat['edits']
+            assert stat['followers']
+            assert stat['following']
+            assert stat['questions']
+            assert stat['name']
+            assert stat['username']
 
     def test_type(self):
         for stat in self.test_stats:
