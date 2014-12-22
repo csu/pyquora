@@ -5,7 +5,7 @@ class TestActivity:
     quoraObj = Quora()
     activity1 = quoraObj.get_activity('Christopher-J-Su')
     activity2 = quoraObj.get_activity('Aaron-Ounn')
-    activity3 = quoraObj.get_activity('Jennifer-Apacible-1')
+    activity3 = quoraObj.get_activity('Elynn-Lee')
 
     @classmethod
     def setup_class(cls):
