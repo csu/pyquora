@@ -1,5 +1,5 @@
 # quora
-[![Build Status](https://travis-ci.org/csu/pyquora.svg?branch=master)](https://travis-ci.org/csu/pyquora)  [![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/csu/pyquora?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+[![Build Status](https://travis-ci.org/csu/pyquora.svg?branch=master)](https://travis-ci.org/csu/pyquora)  [![Latest Version](https://pypip.in/version/quora/badge.svg)](https://pypi.python.org/pypi/quora/)
 
 A Python module to fetch and parse data from Quora.
 
@@ -46,3 +46,8 @@ print stats
 ## Projects using `pyquora`
 * [`quora-api`](https://github.com/csu/quora-api) – A REST API for Quora.
 * [`quora-backup`](https://github.com/csu/quora-backup) – A Python package and CLI for backing up Quora data.
+
+## Contribute
+[![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/csu/pyquora?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
+Check out the issues on GitHub and/or make a pull request to contribute!
