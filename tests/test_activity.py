@@ -2,9 +2,9 @@ from quora import Quora, Activity
 from nose import with_setup
 
 class TestActivity:
-    quoraObj = Quora()
-    activity1 = quoraObj.get_activity('Christopher-J-Su')
-    activity2 = quoraObj.get_activity('Aaron-Ounn')
+    q = Quora()
+    activity1 = q.get_activity('Christopher-J-Su')
+    activity2 = q.get_activity('Aaron-Ounn')
 
     @classmethod
     def setup_class(cls):
