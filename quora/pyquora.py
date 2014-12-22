@@ -58,7 +58,6 @@ def is_author(link, baseurl):
     else:
         return False
 
-
 def is_review(link):
     if link is not None:
         match = re.search('^https?:\/\/www\.?quora.com\/Reviews-of[a-zA-Z0-9-\-]*$', link)
@@ -84,9 +83,6 @@ def check_activity_type(entry):
         return ACTIVITY_ITEM_TYPES.ANSWER
     else:
         return ACTIVITY_ITEM_TYPES.UPVOTE
-
-def is_new_ui(soup):
-    return soup.find('div', attrs={'class': 'ProfileTabs'}) is not None
 
 ####################################################################
 # API
