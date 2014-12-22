@@ -154,9 +154,9 @@ class Quora:
         return POSSIBLE_FEED_KEYS
 
 class Activity:
-    def __init__(self, upvotes=[], user_follows=[], want_answers=[], answers=[], review_requests=[]):
-        self.upvotes = upvotes
-        self.user_follows = user_follows
-        self.want_answers = want_answers
-        self.answers = answers
-        self.review_requests = review_requests
+    def __init__(self, args=None):
+        self.upvotes = []
+        self.user_follows = []
+        self.want_answers = []
+        self.answers = []
+        self.review_requests = []
