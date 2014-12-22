@@ -34,17 +34,9 @@
         <h1>
 <a id="quora" class="anchor" href="#quora" aria-hidden="true"><span class="octicon octicon-link"></span></a>quora</h1>
 
+<p><a href="https://travis-ci.org/csu/pyquora"><img src="https://travis-ci.org/csu/pyquora.svg?branch=master" alt="Build Status"></a>  <a href="https://gitter.im/csu/pyquora?utm_source=badge&amp;utm_medium=badge&amp;utm_campaign=pr-badge&amp;utm_content=badge"><img src="https://badges.gitter.im/Join%20Chat.svg" alt="Gitter"></a></p>
+
 <p>A Python module to fetch and parse data from Quora.</p>
-
-<h3>
-<a id="projects-built-using-pyquora" class="anchor" href="#projects-built-using-pyquora" aria-hidden="true"><span class="octicon octicon-link"></span></a>Projects built using pyquora</h3>
-
-<ul>
-<li>
-<a href="https://github.com/csu/quora-api"><code>quora-api</code></a> – A REST API for Quora.</li>
-<li>
-<a href="https://github.com/csu/quora-backup"><code>quora-backup</code></a> – A Python package and CLI for backing up Quora data.</li>
-</ul>
 
 <h2>
 <a id="installation" class="anchor" href="#installation" aria-hidden="true"><span class="octicon octicon-link"></span></a>Installation</h2>
@@ -66,11 +58,12 @@ quora <span class="pl-k">=</span> new Quora()
 <span class="pl-c"># get user activity</span>
 activity <span class="pl-k">=</span> get_activity(<span class="pl-s1"><span class="pl-pds">'</span>Christopher-J-Su<span class="pl-pds">'</span></span>)
 
-<span class="pl-c"># do stuff with the parsed data</span>
-activity.upvotes <span class="pl-k">=</span> upvotes
+<span class="pl-c"># do stuff with the parsed activity data</span>
+activity.upvotes
 activity.user_follows
 activity.want_answers
 activity.answers
+activity.review_requests
 
 <span class="pl-c"># get user statistics</span>
 stats <span class="pl-k">=</span> quora.get_user_stats(<span class="pl-s1"><span class="pl-pds">'</span>Christopher-J-Su<span class="pl-pds">'</span></span>)
@@ -86,12 +79,7 @@ stats <span class="pl-k">=</span> quora.get_user_stats(<span class="pl-s1"><span
 
 <ul>
 <li>User statistics</li>
-<li>User activity
-
-<ul>
-<li>Broken down into answers, questions, votes, user follows, and question follows</li>
-</ul>
-</li>
+<li>User activity</li>
 </ul>
 
 <h3>
@@ -100,15 +88,17 @@ stats <span class="pl-k">=</span> quora.get_user_stats(<span class="pl-s1"><span
 <ul>
 <li>Questions and answers</li>
 <li>Detailed user information (followers, following, etc.; not just statistics)</li>
-<li>Unit tests</li>
 </ul>
 
 <h2>
-<a id="related-projects" class="anchor" href="#related-projects" aria-hidden="true"><span class="octicon octicon-link"></span></a>Related Projects</h2>
+<a id="projects-using-pyquora" class="anchor" href="#projects-using-pyquora" aria-hidden="true"><span class="octicon octicon-link"></span></a>Projects using <code>pyquora</code>
+</h2>
 
 <ul>
-<li><a href="https://github.com/csu/quora-api">quora-api</a></li>
-<li><a href="https://github.com/csu/quora-backup">quora-backup</a></li>
+<li>
+<a href="https://github.com/csu/quora-api"><code>quora-api</code></a> – A REST API for Quora.</li>
+<li>
+<a href="https://github.com/csu/quora-backup"><code>quora-backup</code></a> – A Python package and CLI for backing up Quora data.</li>
 </ul>
       </section>
     </div>
