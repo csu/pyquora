@@ -101,7 +101,9 @@ class Quora:
         err = None
 
         for item in soup.findAll('span', attrs={'class' : 'profile_count'}):
-            data_stats.append(item.string)
+            m = re.findall('\d', str(item))
+            element = ''.join(m)
+            data_stats.append(element)
         data_stats = map(try_cast, data_stats)
 
         user_dict = {'answers'   : data_stats[1],
