@@ -8,7 +8,7 @@ with open('README') as file:
 
 setup(
     name='quora',
-    version='0.1.16.6',
+    version='0.1.17',
     description='Fetches and parses data from Quora.',
     long_description=long_description,
     author='Christopher Su',

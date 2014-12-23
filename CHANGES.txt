@@ -1,9 +1,4 @@
-v0.1.16.6, 23 December 2014 -- RST readme.
-v0.1.16.5, 23 December 2014 -- RST readme.
-v0.1.16.4, 23 December 2014 -- RST readme.
-v0.1.16.3, 23 December 2014 -- Readme.
-v0.1.16.2, 23 December 2014 -- Readme.
-v0.1.16.1, 23 December 2014 -- Readme.
+v0.1.17, 23 December 2014 -- Added question statistics.
 v0.1.16, 23 December 2014 -- Readme.
 v0.1.15, 23 December 2014 -- Refactoring, update dependencies.
 v0.1.14, 22 December 2014 -- Mutable objects bugfix.
