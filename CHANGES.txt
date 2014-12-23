@@ -1,3 +1,4 @@
+v0.1.15, 23 December 2014 -- Refactoring, update dependencies.
 v0.1.14, 22 December 2014 -- Mutable objects bugfix.
 v0.1.13, 21 December 2014 -- Fix author regex.
 v0.1.12, 19 December 2014 -- Method organization.
