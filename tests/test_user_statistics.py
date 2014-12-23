@@ -1,7 +1,7 @@
 from quora import Quora, Activity
 from nose import with_setup
 
-class TestActivity:
+class TestUserStatistics:
     q = Quora()
     stats1 = q.get_user_stats('Christopher-J-Su')
     stats2 = q.get_user_stats('Aaron-Ounn')
