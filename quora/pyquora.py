@@ -86,6 +86,12 @@ def check_activity_type(entry):
     else:
         return ACTIVITY_ITEM_TYPES.UPVOTE
 
+def format_name(name):
+    try:
+        return '-'.join(name.split())
+    except:
+        return ''
+
 ####################################################################
 # API
 ####################################################################
@@ -159,9 +165,8 @@ class Quora:
         >>> q.get_question_stats('non-existant-question')
         {}
         """
-        soup = BeautifulSoup(requests.get('http://www.quora.com/' + question).text)
-
         try:
+            soup = BeautifulSoup(requests.get('http://www.quora.com/' + question).text)
             topics = []
             for i in soup.find_all('span', attrs={'itemprop' : 'title'}):
                 topics.append(str(i.string))
@@ -190,8 +195,6 @@ class Quora:
 
         >>> print q.get_one_answer('znntQ1')
         {}
-
-
         """
         try:
             if user is None:
@@ -234,6 +237,34 @@ class Quora:
             return answer_dict
         except:
             return dict()
+
+    @staticmethod
+    def get_latest_answers(question):
+        """(str) -> list
+
+        >>> q.get_latest_answers('What-are-some-cool-Python-tricks')
+        list of dicts that contain the answers and other details
+
+        >>> q.get_latest_answers('non-existant-question')
+        []
+        """
+        # Known bug: Some list elements might be empty dicts i.e. {}.
+        # This happens when the answer's author has a number at the end of 
+        # of their username. Ex: Foo-Bar-23
+        try:
+            soup = BeautifulSoup(requests.get('https://www.quora.com/' + question + '/log').text)
+            answered_by = []
+
+            temp = soup.find('div', attrs = {'class' : 'QuestionLog FilteredLog PagedList Log'})
+            temp = temp.find_all('div', attrs = {'class' : 'feed_item_activity'})
+            
+            for i in temp:
+                if 'Answer added by' in i.next:
+                    answered_by.append(i.find('a', attrs = {'class' : 'user'}).string)
+            answered_by = map(format_name, answered_by)
+            return [Quora.get_one_answer(question, i) for i in answered_by]
+        except:
+            return list()
 
 class Activity:
     def __init__(self, args=None):
