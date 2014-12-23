@@ -13,3 +13,9 @@ script: nosetests
 branches:
   only:
     - master
+
+# email notifications
+notifications:
+  email:
+    on_success: never # for now
+    on_failure: never # for now
