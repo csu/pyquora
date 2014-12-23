@@ -152,8 +152,7 @@ class Quora:
 
     @staticmethod
     def get_question_stats(question):
-        """
-        (str) -> dict
+        """(str) -> dict
 
         >>> q.get_question_stats('What-is-python')
         {'want_answers': 3, 'topics': ['Science, Engineering, and Technology', 'Technology', 'Electronics', 'Computers'], 'answer_count': 1}
@@ -176,6 +175,63 @@ class Quora:
                              'topics' : topics
             }
             return question_dict
+        except:
+            return dict()
+
+    @staticmethod
+    def get_one_answer(question, user = None):
+        """(str, str) -> dict
+
+        >>> q.get_one_answer('What-are-some-mistakes-you-noticed-on-Friends', 'Mayur-P-R-Rohith')
+        >>> q.get_one_answer('znntQ')
+        >>> q.get_one_answer('http://qr.ae/znntQ')
+        {'want_answers': 78, 'views': 47, 'question': 'http://qr.ae/znntQ',
+        'comment_count': 0, 'user': u'Mayur', 'answer': '...', 'upvote_count': 3}
+
+        >>> print q.get_one_answer('znntQ1')
+        {}
+
+
+        """
+        try:
+            if user is None:
+                # For short URL's
+                if re.match('http', question):
+                    # question like http://qr.ae/znrZ3
+                    soup = BeautifulSoup(requests.get(question).text)
+                else:
+                    # question like znrZ3
+                    soup = BeautifulSoup(requests.get('http://qr.ae/' + question).text)
+                user = soup.find('span', attrs = {'class' : 'user'}).text
+            else:
+                soup = BeautifulSoup(requests.get('http://www.quora.com/' + question + '/answer/' + user).text)
+
+            answer = soup.find('div', id = re.compile('_answer_content$')).find('div', id = re.compile('_container'))
+            views = soup.find('span', attrs = {'class' : 'stats_row'}).next.next.next.next
+            want_answers = soup.find('span', attrs = {'class' : 'count'}).string
+
+            upvote_count = soup.find('a', attrs = {'class' : 'vote_item_link'}).find('span', attrs = {'class' : 'count'})
+            if upvote_count is None:
+                upvote_count = 0
+
+            try:
+                comment_count = soup.find_all('a', id = re.compile('_view_comment_link'))[-1].find('span').string
+                # '+' is dropped from the number of comments.
+                # Only the comments directly on the answer are considered. Comments on comments are ignored.
+            except:
+                comment_count = 0
+
+            answer_stats = map(try_cast, [views, want_answers, upvote_count, comment_count])
+
+            answer_dict = {'views' : answer_stats[0],
+                           'want_answers' : answer_stats[1],
+                           'upvote_count' : answer_stats[2],
+                           'comment_count' : answer_stats[3],
+                           'answer' : answer,
+                           'question' : question,
+                           'user' : user
+            }
+            return answer_dict
         except:
             return dict()
 
