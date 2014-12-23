@@ -18,7 +18,7 @@ ACTIVITY_ITEM_TYPES = enum(UPVOTE=1, USER_FOLLOW=2, WANT_ANSWER=3, ANSWER=4, REV
 ####################################################################
 # Helpers
 ####################################################################
-def try_cast(s):
+def try_cast_int(s):
     try:
         temp = re.findall('\d', str(s))
         temp = ''.join(temp)
@@ -30,7 +30,7 @@ def get_name(source):
     return str(source.find('span', attrs={'class' : 'user'}).string)
 
 def get_count(element):
-    return try_cast(element.find('span', class_='profile-tab-count').string.replace(',', ''))
+    return try_cast_int(element.find('span', class_='profile-tab-count').string.replace(',', ''))
 
 def get_count_for_user_href(soup, user, suffix):
     return get_count(soup.find('a', class_='link_label', href='/' + user + '/' + suffix))
@@ -100,7 +100,7 @@ class Quora:
 
         for item in soup.findAll('span', attrs={'class' : 'profile_count'}):
             data_stats.append(item)
-        data_stats = map(try_cast, data_stats)
+        data_stats = map(try_cast_int, data_stats)
 
         user_dict = {'answers'   : data_stats[1],
                      'blogs'     : err,
@@ -169,7 +169,7 @@ class Quora:
 
             want_answers = soup.find('span', attrs={'class' : 'count'}).string
             answer_count = soup.find('div', attrs={'class' : 'answer_count'}).next.split()[0]
-            question_stats = map(try_cast, [want_answers, answer_count])
+            question_stats = map(try_cast_int, [want_answers, answer_count])
 
             question_dict = {'want_answers' : question_stats[0],
                              'answer_count' : question_stats[1],
