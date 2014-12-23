@@ -20,7 +20,9 @@ ACTIVITY_ITEM_TYPES = enum(UPVOTE=1, USER_FOLLOW=2, WANT_ANSWER=3, ANSWER=4, REV
 ####################################################################
 def try_cast(s):
     try:
-        return int(s)
+        temp = re.findall('\d', str(s))
+        temp = ''.join(temp)
+        return int(temp)
     except ValueError:
         return s
 
@@ -97,9 +99,7 @@ class Quora:
         err = None
 
         for item in soup.findAll('span', attrs={'class' : 'profile_count'}):
-            m = re.findall('\d', str(item))
-            element = ''.join(m)
-            data_stats.append(element)
+            data_stats.append(item)
         data_stats = map(try_cast, data_stats)
 
         user_dict = {'answers'   : data_stats[1],
@@ -149,6 +149,35 @@ class Quora:
     @staticmethod
     def get_activity_keys():
         return POSSIBLE_FEED_KEYS
+
+    @staticmethod
+    def get_question_stats(question):
+        """
+        (str) -> dict
+
+        >>> q.get_question_stats('What-is-python')
+        {'want_answers': 3, 'topics': ['Science, Engineering, and Technology', 'Technology', 'Electronics', 'Computers'], 'answer_count': 1}
+        >>> q.get_question_stats('non-existant-question')
+        {}
+        """
+        soup = BeautifulSoup(requests.get('http://www.quora.com/' + question).text)
+
+        try:
+            topics = []
+            for i in soup.find_all('span', attrs={'itemprop' : 'title'}):
+                topics.append(str(i.string))
+
+            want_answers = soup.find('span', attrs={'class' : 'count'}).string
+            answer_count = soup.find('div', attrs={'class' : 'answer_count'}).next.split()[0]
+            question_stats = map(try_cast, [want_answers, answer_count])
+
+            question_dict = {'want_answers' : question_stats[0],
+                             'answer_count' : question_stats[1],
+                             'topics' : topics
+            }
+            return question_dict
+        except:
+            return dict()
 
 class Activity:
     def __init__(self, args=None):
