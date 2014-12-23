@@ -249,7 +249,7 @@ class Quora:
         []
         """
         # Known bug: Some list elements might be empty dicts i.e. {}.
-        # This happens when the answer's author has a number at the end of 
+        # This happens when the answer's author has a number at the end of
         # of their username. Ex: Foo-Bar-23
         try:
             soup = BeautifulSoup(requests.get('https://www.quora.com/' + question + '/log').text)
@@ -257,7 +257,7 @@ class Quora:
 
             temp = soup.find('div', attrs = {'class' : 'QuestionLog FilteredLog PagedList Log'})
             temp = temp.find_all('div', attrs = {'class' : 'feed_item_activity'})
-            
+
             for i in temp:
                 if 'Answer added by' in i.next:
                     answered_by.append(i.find('a', attrs = {'class' : 'user'}).string)
