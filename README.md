@@ -44,9 +44,10 @@ print stats
 ### Currently implemented
 * User statistics
 * User activity
+* Question statistics
 
 ### Todo
-* Questions and answers
+* Answer statistics
 * Detailed user information (followers, following, etc.; not just statistics)
 
 ## Projects using `pyquora`
