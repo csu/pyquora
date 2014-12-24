@@ -194,7 +194,6 @@ class Quora:
 
         """
         try:
-            print 'started'
             if user is None:
                 # For short URL's
                 if re.match('http', question):
@@ -206,29 +205,24 @@ class Quora:
                 user = soup.find('span', attrs = {'class' : 'user'}).text
             else:
                 soup = BeautifulSoup(requests.get('http://www.quora.com/' + question + '/answer/' + user).text)
-
-            print 'before soup'
+                
             answer = soup.find('div', id = re.compile('_answer_content$')).find('div', id = re.compile('_container'))
             views = soup.find('span', attrs = {'class' : 'stats_row'}).next.next.next.next
             want_answers = soup.find('span', attrs = {'class' : 'count'}).string
-
-            print 'before upvote count'
+            
             upvote_count = soup.find('a', attrs = {'class' : 'vote_item_link'}).find('span', attrs = {'class' : 'count'})
             if upvote_count is None:
                 upvote_count = 0
-
-            print 'comment count'
+                
             try:
                 comment_count = soup.find_all('a', id = re.compile('_view_comment_link'))[-1].find('span').string
                 # '+' is dropped from the number of comments.
                 # Only the comments directly on the answer are considered. Comments on comments are ignored.
             except:
                 comment_count = 0
-
-            print 'try casting'
+                
             answer_stats = map(try_cast_int, [views, want_answers, upvote_count, comment_count])
-
-            print 'form dict'
+            
             answer_dict = {'views' : answer_stats[0],
                            'want_answers' : answer_stats[1],
                            'upvote_count' : answer_stats[2],
