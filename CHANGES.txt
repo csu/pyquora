@@ -1,3 +1,4 @@
+v0.1.18.1, 23 December 2014 -- Fix answer statistics.
 v0.1.18, 23 December 2014 -- Added answer statistics.
 v0.1.17, 23 December 2014 -- Added question statistics.
 v0.1.16, 23 December 2014 -- Readme.
