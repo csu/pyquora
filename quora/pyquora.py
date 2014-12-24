@@ -179,7 +179,7 @@ class Quora:
             return dict()
 
     @staticmethod
-    def get_one_answer(question, user = None):
+    def get_one_answer(question, user=None):
         """(str, str) -> dict
 
         >>> q.get_one_answer('What-are-some-mistakes-you-noticed-on-Friends', 'Mayur-P-R-Rohith')
@@ -205,29 +205,29 @@ class Quora:
                 user = soup.find('span', attrs = {'class' : 'user'}).text
             else:
                 soup = BeautifulSoup(requests.get('http://www.quora.com/' + question + '/answer/' + user).text)
-                
+
             answer = soup.find('div', id = re.compile('_answer_content$')).find('div', id = re.compile('_container'))
             views = soup.find('span', attrs = {'class' : 'stats_row'}).next.next.next.next
             want_answers = soup.find('span', attrs = {'class' : 'count'}).string
-            
+
             upvote_count = soup.find('a', attrs = {'class' : 'vote_item_link'}).find('span', attrs = {'class' : 'count'})
             if upvote_count is None:
                 upvote_count = 0
-                
+
             try:
                 comment_count = soup.find_all('a', id = re.compile('_view_comment_link'))[-1].find('span').string
                 # '+' is dropped from the number of comments.
                 # Only the comments directly on the answer are considered. Comments on comments are ignored.
             except:
                 comment_count = 0
-                
+
             answer_stats = map(try_cast_int, [views, want_answers, upvote_count, comment_count])
-            
+
             answer_dict = {'views' : answer_stats[0],
                            'want_answers' : answer_stats[1],
                            'upvote_count' : answer_stats[2],
                            'comment_count' : answer_stats[3],
-                           'answer' : answer,
+                           'answer' : str(answer),
                            'question' : question,
                            'user' : user
             }
