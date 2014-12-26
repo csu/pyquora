@@ -14,6 +14,7 @@ def enum(*sequential, **named):
     return type('Enum', (), enums)
 
 ACTIVITY_ITEM_TYPES = enum(UPVOTE=1, USER_FOLLOW=2, WANT_ANSWER=3, ANSWER=4, REVIEW_REQUEST=5)
+LOG_ENTRY_TYPES     = enum(ANSWER_ADDED=1, ANSWER_DELETED=2, COMMENT=2, EDIT=3, TOPIC=4)
 
 ####################################################################
 # Helpers
@@ -28,6 +29,24 @@ def try_cast_int(s):
 
 def get_name(source):
     return str(source.find('span', attrs={'class' : 'user'}).string)
+
+def extract_name(log_entry):
+    print log_entry
+    name = re.match('Answer added by ([a-zA-Z-\ ]*)\. ?$', log_entry)
+    if name is not None:
+        return name.group(1)
+    else:
+        return None
+
+def extract_username(username):
+    if 'https://www.quora.com/' not in username['href']:
+        return username['href'][1:]
+    else:
+        username = re.search("[a-zA-Z-\-]*\-+[a-zA-Z]*-?[0-9]*$", username['href'])
+        if username is not None:
+            return username.group(0)
+        else:
+            return None
 
 def get_count(element):
     return try_cast_int(element.find('span', class_='profile-tab-count').string.replace(',', ''))
@@ -86,11 +105,35 @@ def check_activity_type(entry):
     else:
         return ACTIVITY_ITEM_TYPES.UPVOTE
 
-def format_name(name):
-    try:
-        return '-'.join(name.split())
-    except:
-        return ''
+def is_answer_added_log(entry):
+    return re.match("Answer added", entry) is not None
+
+def is_answer_deleted_log(entry):
+    return re.match("Answer deleted", entry) is not None
+
+def is_comment_log(entry):
+    return re.match("Comment:", entry) is not None
+
+def is_edit_log(entry):
+    return False
+
+def is_topic_log(entry):
+    return re.match("Topic", entry) is not None or re.match("Context", entry) is not None
+
+def check_log_type(log_entry):
+    print "a"
+    if is_answer_added_log(log_entry) is True:
+        return LOG_ENTRY_TYPES.ANSWER_ADDED
+    elif is_answer_deleted_log(log_entry) is True:
+        return LOG_ENTRY_TYPES.ANSWER_DELETED
+    elif is_comment_log(log_entry) is True:
+        return LOG_ENTRY_TYPES.COMMENT
+    elif is_edit_log(log_entry) is True:
+        return LOG_ENTRY_TYPES.EDIT
+    elif is_topic_log(log_entry) is True:
+        return LOG_ENTRY_TYPES.TOPIC
+    else:
+        return None
 
 ####################################################################
 # API
@@ -240,31 +283,19 @@ class Quora:
 
     @staticmethod
     def get_latest_answers(question):
-        """(str) -> list
+        soup = BeautifulSoup(requests.get('http://www.quora.com/' + question + '/log').text)
+        answered_by = []
+        clean_logs   = []
+        raw_logs = soup.findAll('div', attrs={'class' : 'feed_item_activity'})
 
-        >>> q.get_latest_answers('What-are-some-cool-Python-tricks')
-        list of dicts that contain the answers and other details
+        for entry in raw_logs:
+            username = entry.find('a', attrs={'class' : 'user'})
+            if username is not None:
+                username = extract_username(username)
+                if username not in answered_by:
+                    answered_by.append(username)
 
-        >>> q.get_latest_answers('non-existant-question')
-        []
-        """
-        # Known bug: Some list elements might be empty dicts i.e. {}.
-        # This happens when the answer's author has a number at the end of
-        # of their username. Ex: Foo-Bar-23
-        try:
-            soup = BeautifulSoup(requests.get('https://www.quora.com/' + question + '/log').text)
-            answered_by = []
-
-            temp = soup.find('div', attrs = {'class' : 'QuestionLog FilteredLog PagedList Log'})
-            temp = temp.find_all('div', attrs = {'class' : 'feed_item_activity'})
-
-            for i in temp:
-                if 'Answer added by' in i.next:
-                    answered_by.append(i.find('a', attrs = {'class' : 'user'}).string)
-            answered_by = map(format_name, answered_by)
-            return [Quora.get_one_answer(question, i) for i in answered_by]
-        except:
-            return list()
+        return [Quora.get_one_answer(question, author) for author in answered_by]
 
 class Activity:
     def __init__(self, args=None):
