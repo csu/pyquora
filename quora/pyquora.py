@@ -2,6 +2,8 @@ import requests
 from bs4 import BeautifulSoup
 import feedparser
 import re
+import random
+import string
 
 ### Configuration ###
 POSSIBLE_FEED_KEYS = ['link', 'id', 'published', 'title', 'summary']
@@ -184,30 +186,30 @@ class Quora:
             return dict()
 
     @staticmethod
-    def get_one_answer(question, user=None):
+    def get_one_answer(question, author=None):
         """(str, str) -> dict
 
         >>> q.get_one_answer('What-are-some-mistakes-you-noticed-on-Friends', 'Mayur-P-R-Rohith')
         >>> q.get_one_answer('znntQ')
         >>> q.get_one_answer('http://qr.ae/znntQ')
         {'want_answers': 78, 'views': 47, 'question': 'http://qr.ae/znntQ',
-        'comment_count': 0, 'user': u'Mayur', 'answer': '...', 'upvote_count': 3}
+        'comment_count': 0, 'author': u'Mayur', 'answer': '...', 'upvote_count': 3}
 
         >>> print q.get_one_answer('znntQ1')
         {}
         """
         try:
-            if user is None:
+            if author is None:
                 # For short URL's
-                if re.match('http', question):
+                if re.match('http:', question):
                     # question like http://qr.ae/znrZ3
                     soup = BeautifulSoup(requests.get(question).text)
                 else:
                     # question like znrZ3
                     soup = BeautifulSoup(requests.get('http://qr.ae/' + question).text)
-                user = soup.find('span', attrs = {'class' : 'user'}).text
+                author = soup.find('span', attrs = {'class' : 'user'}).text
             else:
-                soup = BeautifulSoup(requests.get('http://www.quora.com/' + question + '/answer/' + user).text)
+                soup = BeautifulSoup(requests.get('http://www.quora.com/' + question + '/answer/' + author).text)
 
             answer = soup.find('div', id = re.compile('_answer_content$')).find('div', id = re.compile('_container'))
             views = soup.find('span', attrs = {'class' : 'stats_row'}).next.next.next.next
@@ -232,7 +234,7 @@ class Quora:
                            'comment_count' : answer_stats[3],
                            'answer' : str(answer),
                            'question' : question,
-                           'user' : user
+                           'author' : author
             }
             return answer_dict
         except:
@@ -265,6 +267,17 @@ class Quora:
             return [Quora.get_one_answer(question, i) for i in answered_by]
         except:
             return list()
+
+    @staticmethod
+    def get_random_answers(count):
+        answers = []
+        while len(answers) < count:
+            question = ''.join(random.choice(string.ascii_lowercase + string.ascii_uppercase + string.digits) for _ in range(5))
+            answer = Quora.get_one_answer(question)
+            if answer != dict():
+                answers.append(answer)
+        return answers
+
 
 class Activity:
     def __init__(self, args=None):
