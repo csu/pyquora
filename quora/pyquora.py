@@ -212,6 +212,7 @@ class Quora:
                 soup = BeautifulSoup(requests.get('http://www.quora.com/' + question + '/answer/' + author).text)
 
             answer = soup.find('div', id = re.compile('_answer_content$')).find('div', id = re.compile('_container'))
+            question_link = soup.find('link', attrs = {'href' : re.compile('^https://www.quora.com/')}).get('href')
             views = soup.find('span', attrs = {'class' : 'stats_row'}).next.next.next.next
             want_answers = soup.find('span', attrs = {'class' : 'count'}).string
 
@@ -234,6 +235,7 @@ class Quora:
                            'comment_count' : answer_stats[3],
                            'answer' : str(answer),
                            'question' : question,
+                           'question_link' : question_link,
                            'author' : author
             }
             return answer_dict
