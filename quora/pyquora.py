@@ -161,7 +161,7 @@ class Quora:
         soup = BeautifulSoup(requests.get('http://www.quora.com/' + question).text)
         raw_topics = soup.find_all('span', attrs={'itemprop' : 'title'})
 
-        for topic in raw_topics
+        for topic in raw_topics:
             topics.append(i.string)
 
         want_answers = soup.find('span', attrs={'class' : 'count'}).string
