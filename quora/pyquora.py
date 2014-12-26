@@ -167,10 +167,9 @@ class Quora:
 
         want_answers = soup.find('span', attrs={'class' : 'count'}).string
         answer_count = soup.find('div', attrs={'class' : 'answer_count'}).string
-        question_stats = map(try_cast_int, [want_answers, answer_count])
 
-        question_dict = {'want_answers' : try_cast(want_answers),
-                         'answer_count' : try_cast(answer_count),
+        question_dict = {'want_answers' : try_cast_int(want_answers),
+                         'answer_count' : try_cast_int(answer_count),
                          'topics' : topics }
         return question_dict
 
