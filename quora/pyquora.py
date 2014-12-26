@@ -104,7 +104,7 @@ class Quora:
         name = get_name(soup)
         err = None
 
-        for item in soup.findAll('span', attrs={'class' : 'profile_count'}):
+        for item in soup.find_all('span', attrs={'class' : 'profile_count'}):
             data_stats.append(item)
         data_stats = map(try_cast_int, data_stats)
 
@@ -159,11 +159,11 @@ class Quora:
     @staticmethod
     def get_question_stats(question):
         soup = BeautifulSoup(requests.get('http://www.quora.com/' + question).text)
-        raw_topics = soup.findAll('span', attrs={'itemprop' : 'title'})
+        raw_topics = soup.find_all('span', attrs={'itemprop' : 'title'})
         topics = []
 
         for topic in raw_topics:
-            topics.append(i.topic)
+            topics.append(topic.string)
 
         want_answers = soup.find('span', attrs={'class' : 'count'}).string
         answer_count = soup.find('div', attrs={'class' : 'answer_count'}).string
