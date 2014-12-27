@@ -2,6 +2,8 @@ import requests
 from bs4 import BeautifulSoup
 import feedparser
 import re
+import random
+import string
 
 ### Configuration ###
 POSSIBLE_FEED_KEYS = ['link', 'id', 'published', 'title', 'summary']
@@ -14,6 +16,7 @@ def enum(*sequential, **named):
     return type('Enum', (), enums)
 
 ACTIVITY_ITEM_TYPES = enum(UPVOTE=1, USER_FOLLOW=2, WANT_ANSWER=3, ANSWER=4, REVIEW_REQUEST=5)
+LOG_ENTRY_TYPES     = enum(ANSWER_ADDED=1, ANSWER_DELETED=2, COMMENT=2, EDIT=3, TOPIC=4)
 
 ####################################################################
 # Helpers
@@ -28,6 +31,24 @@ def try_cast_int(s):
 
 def get_name(source):
     return str(source.find('span', attrs={'class' : 'user'}).string)
+
+def extract_name(log_entry):
+    print log_entry
+    name = re.match('Answer added by ([a-zA-Z-\ ]*)\. ?$', log_entry)
+    if name is not None:
+        return name.group(1)
+    else:
+        return None
+
+def extract_username(username):
+    if 'https://www.quora.com/' not in username['href']:
+        return username['href'][1:]
+    else:
+        username = re.search("[a-zA-Z-\-]*\-+[a-zA-Z]*-?[0-9]*$", username['href'])
+        if username is not None:
+            return username.group(0)
+        else:
+            return None
 
 def get_count(element):
     return try_cast_int(element.find('span', class_='profile-tab-count').string.replace(',', ''))
@@ -86,11 +107,35 @@ def check_activity_type(entry):
     else:
         return ACTIVITY_ITEM_TYPES.UPVOTE
 
-def format_name(name):
-    try:
-        return '-'.join(name.split())
-    except:
-        return ''
+def is_answer_added_log(entry):
+    return re.match("Answer added", entry) is not None
+
+def is_answer_deleted_log(entry):
+    return re.match("Answer deleted", entry) is not None
+
+def is_comment_log(entry):
+    return re.match("Comment:", entry) is not None
+
+def is_edit_log(entry):
+    return False
+
+def is_topic_log(entry):
+    return re.match("Topic", entry) is not None or re.match("Context", entry) is not None
+
+def check_log_type(log_entry):
+    print "a"
+    if is_answer_added_log(log_entry) is True:
+        return LOG_ENTRY_TYPES.ANSWER_ADDED
+    elif is_answer_deleted_log(log_entry) is True:
+        return LOG_ENTRY_TYPES.ANSWER_DELETED
+    elif is_comment_log(log_entry) is True:
+        return LOG_ENTRY_TYPES.COMMENT
+    elif is_edit_log(log_entry) is True:
+        return LOG_ENTRY_TYPES.EDIT
+    elif is_topic_log(log_entry) is True:
+        return LOG_ENTRY_TYPES.TOPIC
+    else:
+        return None
 
 ####################################################################
 # API
@@ -104,7 +149,7 @@ class Quora:
         name = get_name(soup)
         err = None
 
-        for item in soup.findAll('span', attrs={'class' : 'profile_count'}):
+        for item in soup.find_all('span', attrs={'class' : 'profile_count'}):
             data_stats.append(item)
         data_stats = map(try_cast_int, data_stats)
 
@@ -158,58 +203,51 @@ class Quora:
 
     @staticmethod
     def get_question_stats(question):
-        """(str) -> dict
+        soup = BeautifulSoup(requests.get('http://www.quora.com/' + question).text)
+        raw_topics = soup.find_all('span', attrs={'itemprop' : 'title'})
+        topics = []
 
-        >>> q.get_question_stats('What-is-python')
-        {'want_answers': 3, 'topics': ['Science, Engineering, and Technology', 'Technology', 'Electronics', 'Computers'], 'answer_count': 1}
-        >>> q.get_question_stats('non-existant-question')
-        {}
-        """
-        try:
-            soup = BeautifulSoup(requests.get('http://www.quora.com/' + question).text)
-            topics = []
-            for i in soup.find_all('span', attrs={'itemprop' : 'title'}):
-                topics.append(str(i.string))
+        for topic in raw_topics:
+            topics.append(topic.string)
 
-            want_answers = soup.find('span', attrs={'class' : 'count'}).string
-            answer_count = soup.find('div', attrs={'class' : 'answer_count'}).next.split()[0]
-            question_stats = map(try_cast_int, [want_answers, answer_count])
+        want_answers = soup.find('span', attrs={'class' : 'count'}).string
+        answer_count = soup.find('div', attrs={'class' : 'answer_count'}).next.split()[0]
+        question_text = list(soup.find('div', attrs = {'class' : 'question_text_edit'}).find('h1').children)[-1]
 
-            question_dict = {'want_answers' : question_stats[0],
-                             'answer_count' : question_stats[1],
-                             'topics' : topics
-            }
-            return question_dict
-        except:
-            return dict()
+        question_dict = {'want_answers' : try_cast_int(want_answers),
+                         'answer_count' : try_cast_int(answer_count),
+                         'question_text' : question_text,
+                         'topics' : topics }
+        return question_dict
 
     @staticmethod
-    def get_one_answer(question, user=None):
+    def get_one_answer(question, author=None):
         """(str, str) -> dict
 
         >>> q.get_one_answer('What-are-some-mistakes-you-noticed-on-Friends', 'Mayur-P-R-Rohith')
         >>> q.get_one_answer('znntQ')
         >>> q.get_one_answer('http://qr.ae/znntQ')
         {'want_answers': 78, 'views': 47, 'question': 'http://qr.ae/znntQ',
-        'comment_count': 0, 'user': u'Mayur', 'answer': '...', 'upvote_count': 3}
+        'comment_count': 0, 'author': u'Mayur', 'answer': '...', 'upvote_count': 3}
 
         >>> print q.get_one_answer('znntQ1')
         {}
         """
         try:
-            if user is None:
+            if author is None:
                 # For short URL's
-                if re.match('http', question):
+                if re.match('http:', question):
                     # question like http://qr.ae/znrZ3
                     soup = BeautifulSoup(requests.get(question).text)
                 else:
                     # question like znrZ3
                     soup = BeautifulSoup(requests.get('http://qr.ae/' + question).text)
-                user = soup.find('span', attrs = {'class' : 'user'}).text
+                author = soup.find('span', attrs = {'class' : 'user'}).text
             else:
-                soup = BeautifulSoup(requests.get('http://www.quora.com/' + question + '/answer/' + user).text)
+                soup = BeautifulSoup(requests.get('http://www.quora.com/' + question + '/answer/' + author).text)
 
             answer = soup.find('div', id = re.compile('_answer_content$')).find('div', id = re.compile('_container'))
+            question_link = soup.find('link', attrs = {'href' : re.compile('^https://www.quora.com/')}).get('href')
             views = soup.find('span', attrs = {'class' : 'stats_row'}).next.next.next.next
             want_answers = soup.find('span', attrs = {'class' : 'count'}).string
 
@@ -232,7 +270,8 @@ class Quora:
                            'comment_count' : answer_stats[3],
                            'answer' : str(answer),
                            'question' : question,
-                           'user' : user
+                           'question_link' : question_link,
+                           'author' : author
             }
             return answer_dict
         except:
@@ -240,31 +279,30 @@ class Quora:
 
     @staticmethod
     def get_latest_answers(question):
-        """(str) -> list
+        soup = BeautifulSoup(requests.get('http://www.quora.com/' + question + '/log').text)
+        answered_by = []
+        clean_logs   = []
+        raw_logs = soup.findAll('div', attrs={'class' : 'feed_item_activity'})
 
-        >>> q.get_latest_answers('What-are-some-cool-Python-tricks')
-        list of dicts that contain the answers and other details
+        for entry in raw_logs:
+            username = entry.find('a', attrs={'class' : 'user'})
+            if username is not None:
+                username = extract_username(username)
+                if username not in answered_by:
+                    answered_by.append(username)
 
-        >>> q.get_latest_answers('non-existant-question')
-        []
-        """
-        # Known bug: Some list elements might be empty dicts i.e. {}.
-        # This happens when the answer's author has a number at the end of
-        # of their username. Ex: Foo-Bar-23
-        try:
-            soup = BeautifulSoup(requests.get('https://www.quora.com/' + question + '/log').text)
-            answered_by = []
+        return [Quora.get_one_answer(question, author) for author in answered_by]
 
-            temp = soup.find('div', attrs = {'class' : 'QuestionLog FilteredLog PagedList Log'})
-            temp = temp.find_all('div', attrs = {'class' : 'feed_item_activity'})
+    @staticmethod
+    def get_random_answers(count):
+        answers = []
+        while len(answers) < count:
+            question = ''.join(random.choice(string.ascii_lowercase + string.ascii_uppercase + string.digits) for _ in range(5))
+            answer = Quora.get_one_answer(question)
+            if answer != dict():
+                answers.append(answer)
+        return answers
 
-            for i in temp:
-                if 'Answer added by' in i.next:
-                    answered_by.append(i.find('a', attrs = {'class' : 'user'}).string)
-            answered_by = map(format_name, answered_by)
-            return [Quora.get_one_answer(question, i) for i in answered_by]
-        except:
-            return list()
 
 class Activity:
     def __init__(self, args=None):
