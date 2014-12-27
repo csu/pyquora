@@ -211,7 +211,7 @@ class Quora:
             topics.append(topic.string)
 
         want_answers = soup.find('span', attrs={'class' : 'count'}).string
-        answer_count = soup.find('div', attrs={'class' : 'answer_count'}).string
+        answer_count = soup.find('div', attrs={'class' : 'answer_count'}).next.split()[0]
 
         question_dict = {'want_answers' : try_cast_int(want_answers),
                          'answer_count' : try_cast_int(answer_count),
