@@ -134,10 +134,12 @@ class User:
 
     def __init__(self, user):
         self.user = user
+        self._stats = None
 
     @property
     def stats(self):
-        self._stats = self.get_user_stats(self.user)
+        if self._stats is None:
+            self._stats = self.get_user_stats(self.user)
         return self._stats
 
     @staticmethod
