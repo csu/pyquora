@@ -131,6 +131,15 @@ def check_log_type(log_entry):
 ####################################################################
 
 class User:
+
+    def __init__(self, user):
+        self.user = user
+
+    @property
+    def stats(self):
+        self._stats = self.get_user_stats(self.user)
+        return self._stats
+
     @staticmethod
     def get_user_stats(user):
         soup = BeautifulSoup(requests.get('http://www.quora.com/' + user).text)
