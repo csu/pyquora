@@ -1,1 +1,2 @@
-from pyquora import Quora, Activity
+from user import User
+from quora import Quora
