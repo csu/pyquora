@@ -181,8 +181,7 @@ class Quora:
 
             question_dict = {'want_answers' : question_stats[0],
                              'answer_count' : question_stats[1],
-                             'topics' : topics,
-                             'question_text' : question_text
+                             'topics' : topics
             }
             return question_dict
         except:
