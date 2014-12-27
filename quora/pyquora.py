@@ -173,7 +173,6 @@ class Quora:
             for i in soup.find_all('span', attrs={'itemprop' : 'title'}):
                 topics.append(str(i.string))
 
-            question_text = list(soup.find('div', attrs = {'class' : 'question_text_edit'}).find('h1').children)[-1]
 
             want_answers = soup.find('span', attrs={'class' : 'count'}).string
             answer_count = soup.find('div', attrs={'class' : 'answer_count'}).next.split()[0]
