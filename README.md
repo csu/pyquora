@@ -24,7 +24,7 @@ from quora import Quora, Activity
 quora = new Quora()
 
 # get user activity
-activity = get_activity('Christopher-J-Su')
+activity = quora.get_activity('Christopher-J-Su')
 
 # do stuff with the parsed activity data
 activity.upvotes
