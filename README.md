@@ -21,7 +21,7 @@ Install using pip:
 ```python
 from quora import Quora, Activity
 
-quora = new Quora()
+quora = Quora()
 
 # get user activity
 activity = quora.get_activity('Christopher-J-Su')
