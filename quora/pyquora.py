@@ -51,10 +51,12 @@ def extract_username(username):
             return None
 
 def get_count(element):
-    return try_cast_int(element.find('span', class_='profile-tab-count').string.replace(',', ''))
+    count = element.find('span', class_='profile-tab-count').string.replace(',', '')
+    return try_cast_int(count)
 
 def get_count_for_user_href(soup, user, suffix):
-    return get_count(soup.find('a', class_='link_label', href='/' + user + '/' + suffix))
+    element = soup.find('a', class_='link_label', href='/' + user + '/' + suffix)
+    return get_count(element)
 
 def build_feed_item(item):
     dict = {}
