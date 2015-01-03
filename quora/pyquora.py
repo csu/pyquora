@@ -301,7 +301,7 @@ class Quora:
         while len(answers) < count:
             question = ''.join(random.choice(string.ascii_lowercase + string.ascii_uppercase + string.digits) for _ in range(5))
             answer = Quora.get_one_answer(question)
-            if answer != dict():
+            if answer:
                 answers.append(answer)
         return answers
 
