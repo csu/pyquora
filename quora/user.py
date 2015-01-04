@@ -145,7 +145,7 @@ class User:
         return self._stats
 
     @property
-    def stats(self):
+    def activity(self):
         if self._activity is None:
             self._activity = self.get_user_activity(self.user)
         return self._activity
