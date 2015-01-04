@@ -107,7 +107,7 @@ class Quora:
     @staticmethod
     def get_question_stats(question):
         soup = BeautifulSoup(requests.get('http://www.quora.com/' + question).text)
-        return scrape_question_stats(soup)
+        return self.scrape_question_stats(soup)
 
     @staticmethod
     def scrape_question_stats(soup):
