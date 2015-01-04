@@ -46,6 +46,7 @@
 <li><a href="#usage">Usage</a></li>
 <li><a href="#features">Features</a></li>
 <li><a href="#contribute">Contribute</a></li>
+<li><a href="#projects-using-pyquora">Projects using <code>pyquora</code></a></li>
 </ul>
 
 <h2>
@@ -63,10 +64,10 @@
 
 <div class="highlight highlight-python"><pre><span class="pl-k">from</span> quora <span class="pl-k">import</span> Quora, Activity
 
-quora <span class="pl-k">=</span> new Quora()
+quora <span class="pl-k">=</span> Quora()
 
 <span class="pl-c"># get user activity</span>
-activity <span class="pl-k">=</span> get_activity(<span class="pl-s1"><span class="pl-pds">'</span>Christopher-J-Su<span class="pl-pds">'</span></span>)
+activity <span class="pl-k">=</span> quora.get_activity(<span class="pl-s1"><span class="pl-pds">'</span>Christopher-J-Su<span class="pl-pds">'</span></span>)
 
 <span class="pl-c"># do stuff with the parsed activity data</span>
 activity.upvotes
@@ -90,15 +91,23 @@ stats <span class="pl-k">=</span> quora.get_user_stats(<span class="pl-s1"><span
 <ul>
 <li>User statistics</li>
 <li>User activity</li>
+<li>Question statistics</li>
 </ul>
 
 <h3>
 <a id="todo" class="anchor" href="#todo" aria-hidden="true"><span class="octicon octicon-link"></span></a>Todo</h3>
 
 <ul>
-<li>Questions and answers</li>
+<li>Answer statistics</li>
 <li>Detailed user information (followers, following, etc.; not just statistics)</li>
 </ul>
+
+<h2>
+<a id="contribute" class="anchor" href="#contribute" aria-hidden="true"><span class="octicon octicon-link"></span></a>Contribute</h2>
+
+<p><a href="https://gitter.im/csu/pyquora?utm_source=badge&amp;utm_medium=badge&amp;utm_campaign=pr-badge&amp;utm_content=badge"><img src="https://badges.gitter.im/Join%20Chat.svg" alt="Gitter"></a>   <a href="https://huboard.com/csu/pyquora/"><img src="http://img.shields.io/badge/Hu-Board-7965cc.svg" alt="HuBoard"></a></p>
+
+<p>Check out the issues on GitHub and/or make a pull request to contribute!</p>
 
 <h2>
 <a id="projects-using-pyquora" class="anchor" href="#projects-using-pyquora" aria-hidden="true"><span class="octicon octicon-link"></span></a>Projects using <code>pyquora</code>
@@ -110,13 +119,6 @@ stats <span class="pl-k">=</span> quora.get_user_stats(<span class="pl-s1"><span
 <li>
 <a href="https://github.com/csu/quora-backup"><code>quora-backup</code></a> – A Python package and CLI for backing up Quora data.</li>
 </ul>
-
-<h2>
-<a id="contribute" class="anchor" href="#contribute" aria-hidden="true"><span class="octicon octicon-link"></span></a>Contribute</h2>
-
-<p><a href="https://gitter.im/csu/pyquora?utm_source=badge&amp;utm_medium=badge&amp;utm_campaign=pr-badge&amp;utm_content=badge"><img src="https://badges.gitter.im/Join%20Chat.svg" alt="Gitter"></a></p>
-
-<p>Check out the issues on GitHub and/or make a pull request to contribute!</p>
       </section>
     </div>
 
