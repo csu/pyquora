@@ -21,10 +21,10 @@ Install using pip:
 ```python
 from quora import Quora, Activity
 
-quora = new Quora()
+quora = Quora()
 
 # get user activity
-activity = get_activity('Christopher-J-Su')
+activity = quora.get_activity('Christopher-J-Su')
 
 # do stuff with the parsed activity data
 activity.upvotes
@@ -55,6 +55,6 @@ print stats
 * [`quora-backup`](https://github.com/csu/quora-backup) – A Python package and CLI for backing up Quora data.
 
 ## Contribute
-[![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/csu/pyquora?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+[![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/csu/pyquora?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)   [![HuBoard](http://img.shields.io/badge/Hu-Board-7965cc.svg)](https://huboard.com/csu/pyquora/)
 
 Check out the issues on GitHub and/or make a pull request to contribute!

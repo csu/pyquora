@@ -132,9 +132,7 @@ class Quora:
         answers = []
         while len(answers) < count:
             question = ''.join(random.choice(string.ascii_lowercase + string.ascii_uppercase + string.digits) for _ in range(5))
-            try:
-                answer = Answer.get_one_answer(question)
+            answer = Quora.get_one_answer(question)
+            if answer:
                 answers.append(answer)
-            except:
-            	pass
         return answers

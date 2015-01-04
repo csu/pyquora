@@ -40,18 +40,20 @@ def extract_name(log_entry):
         return None
 
 def get_count(element):
-    return try_cast_int(element.find('span', class_='profile-tab-count').string.replace(',', ''))
+    count = element.find('span', class_='profile-tab-count').string.replace(',', '')
+    return try_cast_int(count)
 
 def get_count_for_user_href(soup, user, suffix):
-    return get_count(soup.find('a', class_='link_label', href='/' + user + '/' + suffix))
+    element = soup.find('a', class_='link_label', href='/' + user + '/' + suffix)
+    return get_count(element)
 
 def build_feed_item(item):
-    dict = {}
+    result = {}
     keys = POSSIBLE_FEED_KEYS
     for key in keys:
         if key in item.keys():
-            dict[key] = item[key]
-    return dict
+            result[key] = item[key]
+    return result
 
 def is_want_answer(description):
     tag  = description.find('span', id = re.compile('^[a-z]*_+[a-z]*_+[0-9]*$'))
@@ -59,7 +61,7 @@ def is_want_answer(description):
         return True
     else:
         return False
-    
+
 def is_author(link, baseurl):
     author = re.search('[a-zA-Z-\-]*\-+[a-zA-Z]*-?[0-9]*$', link)
     user   = re.search('com*\/([a-zA-Z]*\-+[a-zA-Z]*-?[a-z-A-Z-0-9]*)\/rss$', baseurl)
@@ -175,32 +177,32 @@ class User:
     @staticmethod
     def get_user_activity(user):
         f = feedparser.parse('http://www.quora.com/' + user + '/rss')
-        dict = {
+        result = {
             'username': user,
             'last_updated': f.feed.updated
         }
         for entry in f.entries:
-            if 'activity' not in dict.keys():
-                dict['activity'] = []
-            dict['activity'].append(build_feed_item(entry))
-        return dict
+            if 'activity' not in result.keys():
+                result['activity'] = []
+            result['activity'].append(build_feed_item(entry))
+        return result
 
     @staticmethod
     def get_activity(user):
         f = feedparser.parse('http://www.quora.com/' + user + '/rss')
         activity = Activity()
         for entry in f.entries:
-            type = check_activity_type(entry)
-            if type is not None:
-                if type == ACTIVITY_ITEM_TYPES.UPVOTE:
+            activity_type = check_activity_type(entry)
+            if activity_type is not None:
+                if activity_type == ACTIVITY_ITEM_TYPES.UPVOTE:
                     activity.upvotes.append(build_feed_item(entry))
-                elif type == ACTIVITY_ITEM_TYPES.USER_FOLLOW:
+                elif activity_type == ACTIVITY_ITEM_TYPES.USER_FOLLOW:
                     activity.user_follows.append(build_feed_item(entry))
-                elif type == ACTIVITY_ITEM_TYPES.WANT_ANSWER:
+                elif activity_type == ACTIVITY_ITEM_TYPES.WANT_ANSWER:
                     activity.want_answers.append(build_feed_item(entry))
-                elif type == ACTIVITY_ITEM_TYPES.ANSWER:
+                elif activity_type == ACTIVITY_ITEM_TYPES.ANSWER:
                     activity.answers.append(build_feed_item(entry))
-                elif type == ACTIVITY_ITEM_TYPES.REVIEW_REQUEST:
+                elif activity_type == ACTIVITY_ITEM_TYPES.REVIEW_REQUEST:
                     activity.review_requests.append(build_feed_item(entry))
         return activity
 
