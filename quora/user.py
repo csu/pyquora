@@ -16,6 +16,7 @@ def enum(*sequential, **named):
 
 ACTIVITY_ITEM_TYPES = enum(UPVOTE=1, USER_FOLLOW=2, WANT_ANSWER=3, ANSWER=4, REVIEW_REQUEST=5)
 LOG_ENTRY_TYPES     = enum(ANSWER_ADDED=1, ANSWER_DELETED=2, COMMENT=2, EDIT=3, TOPIC=4)
+DEFAULT_USER        = None
 
 ####################################################################
 # Helpers
@@ -131,10 +132,8 @@ def check_log_type(log_entry):
 ####################################################################
 # API
 ####################################################################
-
 class User:
-
-    def __init__(self, user):
+    def __init__(self, user=DEFAULT_USER):
         self.user = user
         self._stats = None
         self._activity = None
@@ -146,7 +145,7 @@ class User:
         return self._stats
 
     @property
-    def stats(self):
+    def activity(self):
         if self._activity is None:
             self._activity = self.get_user_activity(self.user)
         return self._activity

@@ -37,7 +37,6 @@ def extract_username(username):
 ####################################################################
 # API
 ####################################################################
-
 class Quora:
     @staticmethod
     def get_one_answer(question, author = None):
@@ -108,7 +107,7 @@ class Quora:
     @staticmethod
     def get_question_stats(question):
         soup = BeautifulSoup(requests.get('http://www.quora.com/' + question).text)
-        return scrape_question_stats(soup)
+        return Quora.scrape_question_stats(soup)
 
     @staticmethod
     def scrape_question_stats(soup):
@@ -141,3 +140,22 @@ class Quora:
             if answer:
                 answers.append(answer)
         return answers
+
+    ### Legacy API
+    @staticmethod
+    def get_user_stats(u):
+        from user import User
+        user = User()
+        return user.get_user_stats(u)
+
+    @staticmethod
+    def get_user_activity(u):
+        from user import User
+        user = User()
+        return user.get_user_activity(u)
+
+    @staticmethod
+    def get_activity(u):
+        from user import User
+        user = User()
+        return user.get_activity(u)

@@ -8,6 +8,7 @@ A Python module to fetch and parse data from Quora.
 * [Usage](#usage)
 * [Features](#features)
 * [Contribute](#contribute)
+* [Projects using `pyquora`](#projects-using-pyquora)
 
 ## Installation
 You will need [Python 2](https://www.python.org/download/). [pip](http://pip.readthedocs.org/en/latest/installing.html) is recommended for installing dependencies.
@@ -19,7 +20,7 @@ Install using pip:
 ## Usage
 
 ```python
-from quora import Quora, Activity
+from quora import Quora
 
 quora = Quora()
 
@@ -50,11 +51,11 @@ print stats
 * Answer statistics
 * Detailed user information (followers, following, etc.; not just statistics)
 
-## Projects using `pyquora`
-* [`quora-api`](https://github.com/csu/quora-api) – A REST API for Quora.
-* [`quora-backup`](https://github.com/csu/quora-backup) – A Python package and CLI for backing up Quora data.
-
 ## Contribute
 [![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/csu/pyquora?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)   [![HuBoard](http://img.shields.io/badge/Hu-Board-7965cc.svg)](https://huboard.com/csu/pyquora/)
 
 Check out the issues on GitHub and/or make a pull request to contribute!
+
+## Projects using `pyquora`
+* [`quora-api`](https://github.com/csu/quora-api) – A REST API for Quora.
+* [`quora-backup`](https://github.com/csu/quora-backup) – A Python package and CLI for backing up Quora data.

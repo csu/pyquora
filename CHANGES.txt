@@ -1,3 +1,4 @@
+v0.1.19, 4 January 2015 -- New API. Legacy support for v0.x API.
 v0.1.18.3, 24 December 2014 -- Fix answer statistics.
 v0.1.18.2, 24 December 2014 -- Fix answer statistics.
 v0.1.18.1, 24 December 2014 -- Fix answer statistics.
