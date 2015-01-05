@@ -19,6 +19,8 @@ Install using pip:
 
 ## Usage
 
+### User statistics
+
 ```python
 from quora import Quora
 
@@ -41,14 +43,61 @@ stats = quora.get_user_stats('Christopher-J-Su')
 print stats
 ```
 
+### Questions
+```python
+from quora import User, Quora
+
+question = Quora.get_question_stats('what-is-python')
+
+question is 
+   {
+    'want_answers': 3,
+    'question_text': u'What is python?', 
+    'topics': [u'Science, Engineering, and Technology', u'Technology', u'Electronics', u'Computers'], 
+    'question_details': None, 'answer_count': 1, 
+    'answer_wiki': '<div class="hidden" id="answer_wiki"><div id="ld_mqcfmt_15628"><div id="__w2_po3p1uM_wiki"></div></div></div>',
+    }
+
+latest_answers = Quora.get_latest_answers('what-is-python')
+```
+
+### Answers
+```python
+from quora import Quora
+
+# The function can be called in any of the following ways.
+answer = Quora.get_one_answer('http://qr.ae/6hARL')
+answer = Quora.get_one_answer('6hARL')
+answer = Quora.get_one_answer(question, author) # question and answer are variables
+
+answer is
+	{
+	 'want_answers': 8, 
+	 'views': 197, 
+	 'author': u'Mayur-P-R-Rohith', 
+	 'question_link': u'https://www.quora.com/Does-Quora-similar-question-search-when-posing-a-new-question-work-better-than-the-search-box-above', 
+	 'comment_count': 1, 
+	 'answer': '...', 
+	 'upvote_count': 5,
+	}
+
+latest_answers = Quora.get_latest_answers('what-is-python')
+
+latest_answer is a list of dicts.
+
+random_answers = get_random_answers(5)
+
+random_answers is a list of 5 random answers.
+```
+
 ## Features
 ### Currently implemented
 * User statistics
 * User activity
 * Question statistics
+* Answer statistics
 
 ### Todo
-* Answer statistics
 * Detailed user information (followers, following, etc.; not just statistics)
 
 ## Contribute
