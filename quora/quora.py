@@ -47,7 +47,7 @@ class Quora:
                 soup = BeautifulSoup(requests.get('http://qr.ae/' + question).text)
         else:
             soup = BeautifulSoup(requests.get('http://www.quora.com/' + question + '/answer/' + author).text)
-        return Answer.scrape_one_answer(soup)
+        return Quora.scrape_one_answer(soup)
 
     @staticmethod
     def scrape_one_answer(soup):
@@ -86,8 +86,8 @@ class Quora:
     @staticmethod
     def get_latest_answers(question):
     	soup = BeautifulSoup(requests.get('http://www.quora.com/' + question + '/log').text)
-    	authors =  Answer.scrape_latest_answers(soup)
-    	return [Answer.get_one_answer(question, author) for author in authors]
+    	authors =  Quora.scrape_latest_answers(soup)
+    	return [Quora.get_one_answer(question, author) for author in authors]
 
     @staticmethod
     def scrape_latest_answers(soup):
@@ -127,7 +127,7 @@ class Quora:
                          'question_text' : question_text,
                          'topics' : topics,
                          'question_details' : question_details,
-                         'answer_wiki' : answer_wiki,
+                         'answer_wiki' : str(answer_wiki),
                         }
         return question_dict
 
