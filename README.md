@@ -20,7 +20,7 @@ Install using pip:
 ## Usage
 
 ```python
-from quora import Quora, Activity
+from quora import Quora
 
 quora = Quora()
 
