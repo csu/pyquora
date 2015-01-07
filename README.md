@@ -26,20 +26,20 @@ from quora import Quora
 
 quora = Quora()
 
-# get user activity
+# Get user activity
 activity = quora.get_activity('Christopher-J-Su')
 
-# do stuff with the parsed activity data
+# Do stuff with the parsed activity data
 activity.upvotes
 activity.user_follows
 activity.want_answers
 activity.answers
 activity.review_requests
 
-# get user statistics
+# Get user statistics
 stats = quora.get_user_stats('Christopher-J-Su')
 
-# take a gander
+# Take a gander
 print stats
 ```
 
