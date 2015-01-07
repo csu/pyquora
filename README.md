@@ -69,24 +69,19 @@ answer = Quora.get_one_answer('http://qr.ae/6hARL')
 answer = Quora.get_one_answer('6hARL')
 answer = Quora.get_one_answer(question, author) # question and answer are variables
 
-answer is
-	{
-	 'want_answers': 8, 
-	 'views': 197, 
-	 'author': u'Mayur-P-R-Rohith', 
-	 'question_link': u'https://www.quora.com/Does-Quora-similar-question-search-when-posing-a-new-question-work-better-than-the-search-box-above', 
-	 'comment_count': 1, 
-	 'answer': '...', 
-	 'upvote_count': 5,
-	}
+answer
+# {
+#  'want_answers': 8, 
+#  'views': 197, 
+#  'author': u'Mayur-P-R-Rohith', 
+#  'question_link': u'https://www.quora.com/Does-Quora-similar-question-search-when-posing-a-new-question-work-better-than-the-search-box-above', 
+#  'comment_count': 1, 
+#  'answer': '...', 
+#  'upvote_count': 5
+# }
 
+# Get the latest answers from a question
 latest_answers = Quora.get_latest_answers('what-is-python')
-
-latest_answer is a list of dicts.
-
-random_answers = get_random_answers(5)
-
-random_answers is a list of 5 random answers.
 ```
 
 ## Features
