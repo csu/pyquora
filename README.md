@@ -45,7 +45,7 @@ print stats
 
 ### Questions
 ```python
-from quora import User, Quora
+from quora import Quora
 
 question = Quora.get_question_stats('what-is-python')
 
@@ -56,9 +56,8 @@ question is
     'topics': [u'Science, Engineering, and Technology', u'Technology', u'Electronics', u'Computers'], 
     'question_details': None, 'answer_count': 1, 
     'answer_wiki': '<div class="hidden" id="answer_wiki"><div id="ld_mqcfmt_15628"><div id="__w2_po3p1uM_wiki"></div></div></div>',
-    }
+   }
 
-latest_answers = Quora.get_latest_answers('what-is-python')
 ```
 
 ### Answers
