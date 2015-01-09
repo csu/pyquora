@@ -1,8 +1,6 @@
 from bs4 import BeautifulSoup
-import random
 import re
 import requests
-import string
 
 ####################################################################
 # Helpers
@@ -39,7 +37,7 @@ def extract_username(username):
 ####################################################################
 class Quora:
     @staticmethod
-    def get_one_answer(question, author = None):
+    def get_one_answer(question, author=None):
         if author is None: # For short URL's
             if re.match('http', question): # question like http://qr.ae/znrZ3
                 soup = BeautifulSoup(requests.get(question).text)
@@ -124,22 +122,12 @@ class Quora:
 
         question_dict = {'want_answers' : try_cast_int(want_answers),
                          'answer_count' : try_cast_int(answer_count),
-                         'question_text' : question_text,
+                         'question_text' : question_text.string,
                          'topics' : topics,
-                         'question_details' : question_details,
-                         'answer_wiki' : str(answer_wiki),
+                         'question_details' : question_details.string,
+                         'answer_wiki' : answer_wiki.string,
                         }
         return question_dict
-
-    @staticmethod
-    def get_random_answers(count):
-        answers = []
-        while len(answers) < count:
-            question = ''.join(random.choice(string.ascii_lowercase + string.ascii_uppercase + string.digits) for _ in range(5))
-            answer = Quora.get_one_answer(question)
-            if answer:
-                answers.append(answer)
-        return answers
 
     ### Legacy API
     @staticmethod
