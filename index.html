@@ -62,25 +62,69 @@
 <h2>
 <a id="usage" class="anchor" href="#usage" aria-hidden="true"><span class="octicon octicon-link"></span></a>Usage</h2>
 
-<div class="highlight highlight-python"><pre><span class="pl-k">from</span> quora <span class="pl-k">import</span> Quora, Activity
+<h3>
+<a id="user-statistics" class="anchor" href="#user-statistics" aria-hidden="true"><span class="octicon octicon-link"></span></a>User statistics</h3>
+
+<div class="highlight highlight-python"><pre><span class="pl-k">from</span> quora <span class="pl-k">import</span> Quora
 
 quora <span class="pl-k">=</span> Quora()
 
-<span class="pl-c"># get user activity</span>
+<span class="pl-c"># Get user activity</span>
 activity <span class="pl-k">=</span> quora.get_activity(<span class="pl-s1"><span class="pl-pds">'</span>Christopher-J-Su<span class="pl-pds">'</span></span>)
 
-<span class="pl-c"># do stuff with the parsed activity data</span>
+<span class="pl-c"># Do stuff with the parsed activity data</span>
 activity.upvotes
 activity.user_follows
 activity.want_answers
 activity.answers
 activity.review_requests
 
-<span class="pl-c"># get user statistics</span>
+<span class="pl-c"># Get user statistics</span>
 stats <span class="pl-k">=</span> quora.get_user_stats(<span class="pl-s1"><span class="pl-pds">'</span>Christopher-J-Su<span class="pl-pds">'</span></span>)
 
-<span class="pl-c"># take a gander</span>
+<span class="pl-c"># Take a gander</span>
 <span class="pl-k">print</span> stats</pre></div>
+
+<h3>
+<a id="questions" class="anchor" href="#questions" aria-hidden="true"><span class="octicon octicon-link"></span></a>Questions</h3>
+
+<div class="highlight highlight-python"><pre><span class="pl-k">from</span> quora <span class="pl-k">import</span> Quora
+
+<span class="pl-c"># Get question statistics</span>
+question <span class="pl-k">=</span> Quora.get_question_stats(<span class="pl-s1"><span class="pl-pds">'</span>what-is-python<span class="pl-pds">'</span></span>)
+
+<span class="pl-c"># question is:</span>
+<span class="pl-c"># {</span>
+<span class="pl-c">#     'want_answers': 3,</span>
+<span class="pl-c">#     'question_text': u'What is python?', </span>
+<span class="pl-c">#     'topics': [u'Science, Engineering, and Technology', u'Technology', u'Electronics', u'Computers'], </span>
+<span class="pl-c">#     'question_details': None, 'answer_count': 1, </span>
+<span class="pl-c">#     'answer_wiki': '&lt;div class="hidden" id="answer_wiki"&gt;&lt;div id="ld_mqcfmt_15628"&gt;&lt;div id="__w2_po3p1uM_wiki"&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;',</span>
+<span class="pl-c"># }</span></pre></div>
+
+<h3>
+<a id="answers" class="anchor" href="#answers" aria-hidden="true"><span class="octicon octicon-link"></span></a>Answers</h3>
+
+<div class="highlight highlight-python"><pre><span class="pl-k">from</span> quora <span class="pl-k">import</span> Quora
+
+<span class="pl-c"># The function can be called in any of the following ways.</span>
+answer <span class="pl-k">=</span> Quora.get_one_answer(<span class="pl-s1"><span class="pl-pds">'</span>http://qr.ae/6hARL<span class="pl-pds">'</span></span>)
+answer <span class="pl-k">=</span> Quora.get_one_answer(<span class="pl-s1"><span class="pl-pds">'</span>6hARL<span class="pl-pds">'</span></span>)
+answer <span class="pl-k">=</span> Quora.get_one_answer(question, author) <span class="pl-c"># question and answer are variables</span>
+
+<span class="pl-c"># answer is:</span>
+<span class="pl-c"># {</span>
+<span class="pl-c">#     'want_answers': 8, </span>
+<span class="pl-c">#     'views': 197, </span>
+<span class="pl-c">#     'author': u'Mayur-P-R-Rohith', </span>
+<span class="pl-c">#     'question_link': u'https://www.quora.com/Does-Quora-similar-question-search-when-posing-a-new-question-work-better-than-the-search-box-ove', </span>
+<span class="pl-c">#     'comment_count': 1, </span>
+<span class="pl-c">#     'answer': '...', </span>
+<span class="pl-c">#     'upvote_count': 5</span>
+<span class="pl-c"># }</span>
+
+<span class="pl-c"># Get the latest answers from a question</span>
+latest_answers <span class="pl-k">=</span> Quora.get_latest_answers(<span class="pl-s1"><span class="pl-pds">'</span>what-is-python<span class="pl-pds">'</span></span>)</pre></div>
 
 <h2>
 <a id="features" class="anchor" href="#features" aria-hidden="true"><span class="octicon octicon-link"></span></a>Features</h2>
@@ -92,13 +136,13 @@ stats <span class="pl-k">=</span> quora.get_user_stats(<span class="pl-s1"><span
 <li>User statistics</li>
 <li>User activity</li>
 <li>Question statistics</li>
+<li>Answer statistics</li>
 </ul>
 
 <h3>
 <a id="todo" class="anchor" href="#todo" aria-hidden="true"><span class="octicon octicon-link"></span></a>Todo</h3>
 
 <ul>
-<li>Answer statistics</li>
 <li>Detailed user information (followers, following, etc.; not just statistics)</li>
 </ul>
 
@@ -136,7 +180,7 @@ stats <span class="pl-k">=</span> quora.get_user_stats(<span class="pl-s1"><span
           </script>
           <script type="text/javascript">
             try {
-              var pageTracker = _gat._getTracker("UA-50435266-1");
+              var pageTracker = _gat._getTracker("UA-34248999-1");
             pageTracker._trackPageview();
             } catch(err) {}
           </script>
