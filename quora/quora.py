@@ -124,8 +124,8 @@ class Quora:
                          'answer_count' : try_cast_int(answer_count),
                          'question_text' : question_text.string,
                          'topics' : topics,
-                         'question_details' : question_details.string,
-                         'answer_wiki' : answer_wiki.string,
+                         'question_details' : str(question_details),
+                         'answer_wiki' : str(answer_wiki),
                         }
         return question_dict
 
