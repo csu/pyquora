@@ -15,7 +15,7 @@ def try_cast_int(s):
 
 def get_question_link(soup):
 	question_link = soup.find('a', attrs = {'class' : 'question_link'})
-	return question_link.get('href')
+	return 'http://www.quora.com' + question_link.get('href')
 
 def get_author(soup):
 	raw_author = soup.find('div', attrs = {'class' : 'author_info'}).next.get('href')

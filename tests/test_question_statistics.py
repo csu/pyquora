@@ -55,4 +55,4 @@ class TestQuestionScraper:
         stats2 = q.scrape_question_stats(BeautifulSoup(open('tests/input_files/question_2')))
         assert stats1 == EXPECTED_STATS_1
         assert stats2 == EXPECTED_STATS_2
-
+        
