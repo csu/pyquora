@@ -7,15 +7,22 @@ import requests
 ####################################################################
 def try_cast_int(s):
     try:
-        temp = re.findall('\d', str(s))
-        temp = ''.join(temp)
-        return int(temp)
-    except ValueError:
+        pattern = re.compile(r'([0-9]+(\.[0-9]+)*[ ]*[Kk])|([0-9]+)')
+        raw_result = re.search(pattern, s).groups()
+        if raw_result[2] != None:
+            return int(raw_result[2])
+        elif raw_result[1] == None:
+            raw_result = re.search(r'([0-9]+)', raw_result[0])
+            return int(raw_result.groups()[0]) * 1000
+        else:
+            raw_result = re.search(r'([0-9]+)\.([0-9]+)', raw_result[0]).groups()
+            return int(raw_result[0]) * 1000 + int(raw_result[1]) * 100
+    except:
         return s
 
 def get_question_link(soup):
 	question_link = soup.find('a', attrs = {'class' : 'question_link'})
-	return question_link.get('href')
+	return 'http://www.quora.com' + question_link.get('href')
 
 def get_author(soup):
 	raw_author = soup.find('div', attrs = {'class' : 'author_info'}).next.get('href')
@@ -56,7 +63,7 @@ class Quora:
         want_answers = soup.find('span', attrs = {'class' : 'count'}).string
 
         try:
-            upvote_count = soup.find('a', attrs = {'class' : 'vote_item_link'}).find('span', attrs = {'class' : 'count'})
+            upvote_count = soup.find('a', attrs = {'class' : 'vote_item_link'}).find('span', attrs = {'class' : 'count'}).string
             if upvote_count is None:
             	upvote_count = 0
         except:
@@ -124,8 +131,8 @@ class Quora:
                          'answer_count' : try_cast_int(answer_count),
                          'question_text' : question_text.string,
                          'topics' : topics,
-                         'question_details' : question_details.string,
-                         'answer_wiki' : answer_wiki.string,
+                         'question_details' : str(question_details),
+                         'answer_wiki' : str(answer_wiki),
                         }
         return question_dict
 
