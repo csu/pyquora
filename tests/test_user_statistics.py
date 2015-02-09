@@ -1,7 +1,14 @@
 from quora import Quora, Activity
 from nose import with_setup
 
-expected_user_stat_keys = ['answers', 'edits', 'followers', 'following', 'questions', 'name', 'username']
+expected_user_stat_keys = ['answers',
+                            'edits',
+                            'followers',
+                            'following',
+                            'questions',
+                            'name',
+                            'username'
+                            ]
 
 class TestUserStatistics:
     q = Quora()
