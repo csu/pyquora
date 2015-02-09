@@ -14,19 +14,15 @@ class TestActivity:
     def test_activity_answers(self):
         for activity in self.test_activities:
             assert activity.answers
-            assert activity.answers
 
     def test_activity_want_answers(self):
         for activity in self.test_activities:
-            assert activity.want_answers
             assert activity.want_answers
 
     def test_activity_user_follows(self):
         for activity in self.test_activities:
             assert activity.user_follows
-            assert activity.user_follows
 
     def test_activity_upvotes(self):
         for activity in self.test_activities:
-            assert activity.user_follows
             assert activity.user_follows
