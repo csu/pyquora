@@ -63,7 +63,7 @@ class Quora:
         want_answers = soup.find('span', attrs = {'class' : 'count'}).string
 
         try:
-            upvote_count = soup.find('a', attrs = {'class' : 'vote_item_link'}).find('span', attrs = {'class' : 'count'})
+            upvote_count = soup.find('a', attrs = {'class' : 'vote_item_link'}).find('span', attrs = {'class' : 'count'}).string
             if upvote_count is None:
             	upvote_count = 0
         except:
