@@ -3,6 +3,8 @@ try:
 except ImportError:
     from distutils.core import setup
 
+from gen_rst_readme import convert_md_to_rst
+
 convert_md_to_rst()
 
 with open('README') as file:
