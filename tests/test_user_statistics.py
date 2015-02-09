@@ -3,11 +3,19 @@ from nose import with_setup
 
 class TestUserStatistics:
     q = Quora()
+    test_stats = []
+
     stats1 = q.get_user_stats('Christopher-J-Su')
-    stats2 = q.get_user_stats('Aaron-Ounn')
-    stats3 = q.get_user_stats('Elynn-Lee')
-    stats4 = q.get_user_stats('Jennifer-Apacible-1')
-    test_stats = [stats1, stats2, stats3, stats4]
+    test_stats.append(stats1)
+
+    # stats2 = q.get_user_stats('Aaron-Ounn')
+    # test_stats.append(stats2)
+
+    # stats3 = q.get_user_stats('Elynn-Lee')
+    # test_stats.append(stats3)
+
+    # stats4 = q.get_user_stats('Jennifer-Apacible-1')
+    # test_stats.append(stats4)
 
     # todo: add tests for nonexistant users and other edge cases
 
