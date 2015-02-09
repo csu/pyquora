@@ -1,6 +1,8 @@
 from quora import Quora, Activity
 from nose import with_setup
 
+expected_user_stat_keys = ['answers', 'edits', 'followers', 'following', 'questions', 'name', 'username']
+
 class TestUserStatistics:
     q = Quora()
     test_stats = []
@@ -25,13 +27,8 @@ class TestUserStatistics:
 
     def test_exists(self):
         for stat in self.test_stats:
-            assert stat['answers']
-            assert stat['edits']
-            assert stat['followers']
-            assert stat['following']
-            assert stat['questions']
-            assert stat['name']
-            assert stat['username']
+            for key in expected_user_stat_keys:
+                assert stat[key]
 
     def test_type(self):
         for stat in self.test_stats:
