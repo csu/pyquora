@@ -115,7 +115,6 @@ def is_topic_log(entry):
     return re.match("Topic", entry) is not None or re.match("Context", entry) is not None
 
 def check_log_type(log_entry):
-    print "a"
     if is_answer_added_log(log_entry) is True:
         return LOG_ENTRY_TYPES.ANSWER_ADDED
     elif is_answer_deleted_log(log_entry) is True:
