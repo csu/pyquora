@@ -1,18 +1,7 @@
 pyquora
 =======
 
-`|Build Status| <https://travis-ci.org/csu/pyquora>`_ `|Latest
-Version| <https://pypi.python.org/pypi/quora/>`_
-
 A Python module to fetch and parse data from Quora.
-
-Table of Contents
-~~~~~~~~~~~~~~~~~
-
--  `Installation <#installation>`_
--  `Usage <#usage>`_
--  `Features <#features>`_
--  `Contribute <#contribute>`_
 
 Installation
 ------------
@@ -30,27 +19,75 @@ Install using pip:
 Usage
 -----
 
+User statistics
+~~~~~~~~~~~~~~~
+
 ::
 
-    from quora import Quora, Activity
+    from quora import Quora
 
-    quora = new Quora()
+    quora = Quora()
 
-    # get user activity
-    activity = get_activity('Christopher-J-Su')
+    # Get user activity
+    activity = quora.get_activity('Christopher-J-Su')
 
-    # do stuff with the parsed activity data
+    # Do stuff with the parsed activity data
     activity.upvotes
     activity.user_follows
     activity.want_answers
     activity.answers
     activity.review_requests
 
-    # get user statistics
+    # Get user statistics
     stats = quora.get_user_stats('Christopher-J-Su')
 
-    # take a gander
+    # Take a gander
     print stats
+
+Questions
+~~~~~~~~~
+
+::
+
+    from quora import Quora
+
+    # Get question statistics
+    question = Quora.get_question_stats('what-is-python')
+
+    # question is:
+    # {
+    #     'want_answers': 3,
+    #     'question_text': u'What is python?', 
+    #     'topics': [u'Science, Engineering, and Technology', u'Technology', u'Electronics', u'Computers'], 
+    #     'question_details': None, 'answer_count': 1, 
+    #     'answer_wiki': '<div class="hidden" id="answer_wiki"><div id="ld_mqcfmt_15628"><div id="__w2_po3p1uM_wiki"></div></div></div>',
+    # }
+
+Answers
+~~~~~~~
+
+::
+
+    from quora import Quora
+
+    # The function can be called in any of the following ways.
+    answer = Quora.get_one_answer('http://qr.ae/6hARL')
+    answer = Quora.get_one_answer('6hARL')
+    answer = Quora.get_one_answer(question, author) # question and answer are variables
+
+    # answer is:
+    # {
+    #     'want_answers': 8, 
+    #     'views': 197, 
+    #     'author': u'Mayur-P-R-Rohith', 
+    #     'question_link': u'https://www.quora.com/Does-Quora-similar-question-search-when-posing-a-new-question-work-better-than-the-search-box-ove', 
+    #     'comment_count': 1, 
+    #     'answer': '...', 
+    #     'upvote_count': 5
+    # }
+
+    # Get the latest answers from a question
+    latest_answers = Quora.get_latest_answers('what-is-python')
 
 Features
 --------
@@ -60,30 +97,12 @@ Currently implemented
 
 -  User statistics
 -  User activity
+-  Question statistics
+-  Answer statistics
 
 Todo
 ~~~~
 
--  Questions and answers
 -  Detailed user information (followers, following, etc.; not just
    statistics)
 
-Projects using ``pyquora``
---------------------------
-
--  ```quora-api`` <https://github.com/csu/quora-api>`_ – A REST API for
-   Quora.
--  ```quora-backup`` <https://github.com/csu/quora-backup>`_ – A Python
-   package and CLI for backing up Quora data.
-
-Contribute
-----------
-
-`|Gitter| <https://gitter.im/csu/pyquora?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge>`_
-
-Check out the issues on GitHub and/or make a pull request to contribute!
-
-.. |Build
-Status| image:: https://travis-ci.org/csu/pyquora.svg?branch=master
-.. |Latest Version| image:: https://pypip.in/version/quora/badge.svg
-.. |Gitter| image:: https://badges.gitter.im/Join%20Chat.svg
