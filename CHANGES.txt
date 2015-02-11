@@ -1,3 +1,4 @@
+v0.1.20.5, 10 February 2016 -- Minor changes throughout.
 v0.1.20.1, 6 January 2015 -- Fix question description.
 v0.1.20, 6 January 2015 -- Additional question stats.
 v0.1.19, 4 January 2015 -- New API. Legacy support for v0.x API.
