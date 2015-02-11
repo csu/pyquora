@@ -14,7 +14,7 @@ class TestUserStatistics:
     test_stats.append(User('Christopher-J-Su').stats)
     # test_stats.append(User('Aaron-Ounn').stats())
     # test_stats.append(User('Elynn-Lee').stats())
-    test_stats.append(User('Jennifer-Apacible-1').stats)
+    # test_stats.append(User('Jennifer-Apacible-1').stats)
     # TODO: add tests for nonexistant users and other edge cases
 
     def test_exists(self):
