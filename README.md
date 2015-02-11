@@ -30,11 +30,7 @@ user = User('Christopher-J-Su')
 activity = user.activity
 
 # Do stuff with the parsed activity data
-activity.upvotes
-activity.user_follows
-activity.want_answers
-activity.answers
-activity.review_requests
+print activity
 
 # Get user statistics
 stats = user.stats
