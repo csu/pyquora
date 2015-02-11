@@ -22,12 +22,12 @@ Install using pip:
 ### User statistics
 
 ```python
-from quora import Quora
+from quora import User
 
-quora = Quora()
+user = User('Christopher-J-Su')
 
 # Get user activity
-activity = quora.get_activity('Christopher-J-Su')
+activity = user.activity
 
 # Do stuff with the parsed activity data
 activity.upvotes
@@ -37,7 +37,7 @@ activity.answers
 activity.review_requests
 
 # Get user statistics
-stats = quora.get_user_stats('Christopher-J-Su')
+stats = user.stats
 
 # Take a gander
 print stats
