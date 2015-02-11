@@ -1,4 +1,4 @@
-from quora import Quora, Activity
+from quora import User, Activity
 from nose import with_setup
 
 expected_user_stat_keys = ['answers',
@@ -11,10 +11,10 @@ expected_user_stat_keys = ['answers',
                             ]
 
 class TestUserStatistics:
-    q = Quora()
+    u = User()
     test_stats = []
 
-    stats1 = q.get_user_stats('Christopher-J-Su')
+    stats1 = u.get_user_stats('Christopher-J-Su')
     test_stats.append(stats1)
 
     # stats2 = q.get_user_stats('Aaron-Ounn')
