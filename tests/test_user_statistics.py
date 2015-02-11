@@ -1,5 +1,4 @@
-from quora import User, Activity
-from nose import with_setup
+from quora import User
 
 expected_user_stat_keys = ['answers',
                             'edits',
@@ -11,26 +10,12 @@ expected_user_stat_keys = ['answers',
                             ]
 
 class TestUserStatistics:
-    u = User()
     test_stats = []
-
-    stats1 = u.get_user_stats('Christopher-J-Su')
-    test_stats.append(stats1)
-
-    # stats2 = q.get_user_stats('Aaron-Ounn')
-    # test_stats.append(stats2)
-
-    # stats3 = q.get_user_stats('Elynn-Lee')
-    # test_stats.append(stats3)
-
-    # stats4 = q.get_user_stats('Jennifer-Apacible-1')
-    # test_stats.append(stats4)
-
-    # todo: add tests for nonexistant users and other edge cases
-
-    @classmethod
-    def setup_class(cls):
-        print "Setup here"
+    test_stats.append(User('Christopher-J-Su').stats)
+    # test_stats.append(User('Aaron-Ounn').stats())
+    # test_stats.append(User('Elynn-Lee').stats())
+    test_stats.append(User('Jennifer-Apacible-1').stats)
+    # TODO: add tests for nonexistant users and other edge cases
 
     def test_exists(self):
         for stat in self.test_stats:
