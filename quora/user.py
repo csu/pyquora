@@ -1,4 +1,5 @@
 from bs4 import BeautifulSoup
+from quora import try_cast_int
 import feedparser
 import re
 import requests
@@ -21,13 +22,6 @@ DEFAULT_USER        = None
 ####################################################################
 # Helpers
 ####################################################################
-def try_cast_int(s):
-    try:
-        temp = re.findall('\d', str(s))
-        temp = ''.join(temp)
-        return int(temp)
-    except ValueError:
-        return s
 
 def get_name(source):
     return str(source.find('span', attrs={'class' : 'user'}).string)
@@ -157,9 +151,9 @@ class User:
         err = None
 
         for item in soup.find_all('span', attrs={'class' : 'profile_count'}):
-            data_stats.append(item)
+            data_stats.append(item.string)
         data_stats = map(try_cast_int, data_stats)
-
+        
         user_dict = {'answers'   : data_stats[1],
                      'blogs'     : err,
                      'edits'     : data_stats[5],
