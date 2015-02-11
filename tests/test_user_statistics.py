@@ -12,8 +12,8 @@ expected_user_stat_keys = ['answers',
 class TestUserStatistics:
     test_stats = []
     test_stats.append(User('Christopher-J-Su').stats)
-    # test_stats.append(User('Aaron-Ounn').stats())
-    # test_stats.append(User('Elynn-Lee').stats())
+    # test_stats.append(User('Aaron-Ounn').stats
+    # test_stats.append(User('Elynn-Lee').stats
     # test_stats.append(User('Jennifer-Apacible-1').stats)
     # TODO: add tests for nonexistant users and other edge cases
 
