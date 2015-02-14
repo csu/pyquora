@@ -1,3 +1,5 @@
+#coding=utf-8
+
 from bs4 import BeautifulSoup
 from quora import try_cast_int
 import feedparser
