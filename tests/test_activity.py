@@ -1,28 +1,12 @@
-from quora import Quora, Activity
-from nose import with_setup
+from quora import User
 
 class TestActivity:
-    q = Quora()
-    activity1 = q.get_activity('Christopher-J-Su')
-    activity2 = q.get_activity('Aaron-Ounn')
-    test_activities = [activity1, activity2]
+    test_activities = []
+    test_activities.append(User('Christopher-J-Su').activity)
+    test_activities.append(User('Aaron-Ounn').activity)
 
-    @classmethod
-    def setup_class(cls):
-        print "Setup here"
-
-    def test_activity_answers(self):
+    def test_activity(self):
         for activity in self.test_activities:
-            assert activity.answers
+            assert activity['activity']
 
-    def test_activity_want_answers(self):
-        for activity in self.test_activities:
-            assert activity.want_answers
-
-    def test_activity_user_follows(self):
-        for activity in self.test_activities:
-            assert activity.user_follows
-
-    def test_activity_upvotes(self):
-        for activity in self.test_activities:
-            assert activity.user_follows
+    # TODO: add tests to ensure that all fields in all types of activity are valid

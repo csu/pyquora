@@ -151,17 +151,14 @@ class Quora:
     @staticmethod
     def get_user_stats(u):
         from user import User
-        user = User()
-        return user.get_user_stats(u)
+        return User.get_user_stats(u)
 
     @staticmethod
     def get_user_activity(u):
         from user import User
-        user = User()
-        return user.get_user_activity(u)
+        return User.get_user_activity(u)
 
     @staticmethod
     def get_activity(u):
         from user import User
-        user = User()
-        return user.get_activity(u)
+        return User.get_activity(u)

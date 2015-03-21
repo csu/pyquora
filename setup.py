@@ -3,16 +3,12 @@ try:
 except ImportError:
     from distutils.core import setup
 
-from gen_rst_readme import convert_md_to_rst
-
-convert_md_to_rst()
-
 with open('README') as file:
     long_description = file.read()
 
 setup(
     name='quora',
-    version='0.1.20.4',
+    version='0.1.21',
     description='Fetches and parses data from Quora.',
     long_description=long_description,
     author='Christopher Su',
