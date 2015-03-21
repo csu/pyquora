@@ -28,22 +28,6 @@ DEFAULT_USER        = None
 def get_name(source):
     return str(source.find('span', attrs={'class' : 'user'}).string)
 
-def extract_name(log_entry):
-    print log_entry
-    name = re.match('Answer added by ([a-zA-Z-\ ]*)\. ?$', log_entry)
-    if name is not None:
-        return name.group(1)
-    else:
-        return None
-
-def get_count(element):
-    count = element.find('span', class_='profile-tab-count').string.replace(',', '')
-    return try_cast_int(count)
-
-def get_count_for_user_href(soup, user, suffix):
-    element = soup.find('a', class_='link_label', href='/' + user + '/' + suffix)
-    return get_count(element)
-
 def build_feed_item(item):
     result = {}
     keys = POSSIBLE_FEED_KEYS
@@ -95,34 +79,6 @@ def check_activity_type(entry):
     else:
         return ACTIVITY_ITEM_TYPES.UPVOTE
 
-def is_answer_added_log(entry):
-    return re.match("Answer added", entry) is not None
-
-def is_answer_deleted_log(entry):
-    return re.match("Answer deleted", entry) is not None
-
-def is_comment_log(entry):
-    return re.match("Comment:", entry) is not None
-
-def is_edit_log(entry):
-    return False
-
-def is_topic_log(entry):
-    return re.match("Topic", entry) is not None or re.match("Context", entry) is not None
-
-def check_log_type(log_entry):
-    if is_answer_added_log(log_entry) is True:
-        return LOG_ENTRY_TYPES.ANSWER_ADDED
-    elif is_answer_deleted_log(log_entry) is True:
-        return LOG_ENTRY_TYPES.ANSWER_DELETED
-    elif is_comment_log(log_entry) is True:
-        return LOG_ENTRY_TYPES.COMMENT
-    elif is_edit_log(log_entry) is True:
-        return LOG_ENTRY_TYPES.EDIT
-    elif is_topic_log(log_entry) is True:
-        return LOG_ENTRY_TYPES.TOPIC
-    else:
-        return None
 
 ####################################################################
 # API
@@ -208,10 +164,6 @@ class User:
             return activity
         except:
             return Activity()
-
-    @staticmethod
-    def get_activity_keys():
-        return POSSIBLE_FEED_KEYS
 
 class Activity:
     def __init__(self, args=None):
