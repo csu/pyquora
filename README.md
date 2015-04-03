@@ -56,7 +56,7 @@ question = Quora.get_question_stats('what-is-python')
 # }
 ```
 
-### Answers
+### Answer statistics
 ```python
 from quora import Quora
 
