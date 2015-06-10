@@ -1,6 +1,8 @@
 # pyquora
 [![Build Status](https://travis-ci.org/csu/pyquora.svg?branch=master)](https://travis-ci.org/csu/pyquora)  [![Latest Version](https://pypip.in/version/quora/badge.svg)](https://pypi.python.org/pypi/quora/)
 
+#### Note: this API is currently broken due to changes on Quora's end. Issuese and pull requests are welcome.
+
 A Python module to fetch and parse data from Quora.
 
 ### Table of Contents
