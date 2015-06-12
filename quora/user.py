@@ -108,10 +108,10 @@ class User:
             name = get_name(soup)
             err = None
 
-            for item in soup.find_all('span', attrs={'class' : 'profile_count'}):
+            for item in soup.find_all('span', attrs={'class' : 'list_count'}):
                 data_stats.append(item.string)
             data_stats = map(try_cast_int, data_stats)
-            
+
             user_dict = {'answers'   : data_stats[1],
                          'blogs'     : err,
                          'edits'     : data_stats[5],
