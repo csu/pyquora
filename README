@@ -1,13 +1,27 @@
 pyquora
 =======
 
+Note: parts of this library may be broken due to changes on Quora's end. Issues and pull requests welcome.
+----------------------------------------------------------------------------------------------------------
+
+|Build Status|
+
 A Python module to fetch and parse data from Quora.
+
+Table of Contents
+-----------------
+
+-  `Installation <#installation>`__
+-  `Usage <#usage>`__
+-  `Features <#features>`__
+-  `Contribute <#contribute>`__
+-  `Projects using ``pyquora`` <#projects-using-pyquora>`__
 
 Installation
 ------------
 
-You will need `Python 2 <https://www.python.org/download/>`_.
-`pip <http://pip.readthedocs.org/en/latest/installing.html>`_ is
+You will need `Python 2 <https://www.python.org/download/>`__.
+`pip <http://pip.readthedocs.org/en/latest/installing.html>`__ is
 recommended for installing dependencies.
 
 Install using pip:
@@ -22,7 +36,7 @@ Usage
 User statistics
 ~~~~~~~~~~~~~~~
 
-::
+.. code:: python
 
     from quora import User
 
@@ -43,7 +57,7 @@ User statistics
 Questions
 ~~~~~~~~~
 
-::
+.. code:: python
 
     from quora import Quora
 
@@ -59,10 +73,10 @@ Questions
     #     'answer_wiki': '<div class="hidden" id="answer_wiki"><div id="ld_mqcfmt_15628"><div id="__w2_po3p1uM_wiki"></div></div></div>',
     # }
 
-Answers
-~~~~~~~
+Answer statistics
+~~~~~~~~~~~~~~~~~
 
-::
+.. code:: python
 
     from quora import Quora
 
@@ -96,8 +110,8 @@ Currently implemented
 -  Question statistics
 -  Answer statistics
 
-Todo
-~~~~
+To do
+~~~~~
 
 -  Detailed user information (followers, following, etc.; not just
    statistics)

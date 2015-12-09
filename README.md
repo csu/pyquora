@@ -1,5 +1,7 @@
 # pyquora
-[![Build Status](https://travis-ci.org/csu/pyquora.svg?branch=master)](https://travis-ci.org/csu/pyquora)  [![Latest Version](https://pypip.in/version/quora/badge.svg)](https://pypi.python.org/pypi/quora/)
+#### Note: parts of this library may be broken due to changes on Quora's end. Issues and pull requests welcome.
+
+[![Build Status](https://travis-ci.org/csu/pyquora.svg?branch=master)](https://travis-ci.org/csu/pyquora)
 
 A Python module to fetch and parse data from Quora.
 
@@ -56,7 +58,7 @@ question = Quora.get_question_stats('what-is-python')
 # }
 ```
 
-### Answers
+### Answer statistics
 ```python
 from quora import Quora
 
@@ -87,7 +89,7 @@ latest_answers = Quora.get_latest_answers('what-is-python')
 * Question statistics
 * Answer statistics
 
-### Todo
+### To do
 * Detailed user information (followers, following, etc.; not just statistics)
 
 ## Contribute
