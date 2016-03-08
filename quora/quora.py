@@ -66,13 +66,13 @@ class Quora:
     Fetches one answer and it's details.
     """
     if author is None: # For short URL's
-      if re.match('http', question): # question like http://qr.ae/znrZ3
+      if question.startswith('http'): # question like http://qr.ae/znrZ3
         content = requests.get(question).text
       else: # question like znrZ3
         content = requests.get('http://qr.ae/' + question).text
     else:
-      content = requests.get('http://www.quora.com/' + question + '/answer/' + author).text
-      
+      content = requests.get('http://www.quora.com/' + question + '/answer/' + author + '?share=1').text
+
     soup = BeautifulSoup(content, "html.parser")
     return Quora.scrape_one_answer(soup)
 
