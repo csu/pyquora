@@ -1,3 +1,4 @@
+v0.1.23, 8 March 2016 -- Disabled stats that are no longer possible to obtain due to Quora UI changes.
 v0.1.22, 13 June 2015 -- Fixed to work with Quora UI changes.
 v0.1.21, 28 February 2015 -- Fixed bug in legacy API.
 v0.1.20.5, 10 February 2015 -- Minor changes throughout.

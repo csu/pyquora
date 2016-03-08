@@ -8,7 +8,7 @@ with open('README') as file:
 
 setup(
     name='quora',
-    version='0.1.22',
+    version='0.1.23',
     description='Fetches and parses data from Quora.',
     long_description=long_description,
     author='Christopher Su',
@@ -16,8 +16,8 @@ setup(
     url='https://github.com/csu/pyquora',
     packages=['quora'],
     install_requires=[
-        "beautifulsoup4 == 4.3.2",
-        "feedparser == 5.1.3",
-        "requests == 2.5.0"
+        "beautifulsoup4",
+        "feedparser",
+        "requests"
     ]
 )
