@@ -86,7 +86,6 @@ class Quora:
       question_link = get_question_link(soup)
       author = get_author(soup)
       views = soup.find('span', attrs = {'class' : 'stats_row'}).next.next.next.next
-      want_answers = soup.find('span', attrs = {'class' : 'count'}).string
 
       try:
         upvote_count = soup.find('a', attrs = {'class' : 'vote_item_link'}).find('span', attrs = {'class' : 'count'}).string
@@ -102,12 +101,9 @@ class Quora:
       except:
         comment_count = 0
 
-      answer_stats = map(try_cast_int, [views, want_answers, upvote_count, comment_count])
-
-      answer_dict = {'views' : answer_stats[0],
-               'want_answers' : answer_stats[1],
-               'upvote_count' : answer_stats[2],
-               'comment_count' : answer_stats[3],
+      answer_dict = {'views' : try_cast_int(views),
+               'upvote_count' : try_cast_int(upvote_count),
+               'comment_count' : try_cast_int(comment_count),
                'answer' : str(answer),
                'question_link' : question_link,
                'author' : author
@@ -165,13 +161,12 @@ class Quora:
       for topic in raw_topics:
         topics.append(topic.string)
 
-      want_answers = soup.find('span', attrs={'class' : 'count'}).string
       answer_count = soup.find('div', attrs={'class' : 'answer_count'}).next.split()[0]
       question_text = list(soup.find('div', attrs = {'class' : 'question_text_edit'}).find('h1').children)[-1]
       question_details = soup.find('div', attrs = {'class' : 'question_details_text'})
       answer_wiki = soup.find('div', attrs = {'class' : 'AnswerWikiArea'}).find('div')
 
-      question_dict = {'want_answers' : try_cast_int(want_answers),
+      question_dict = {
                'answer_count' : try_cast_int(answer_count),
                'question_text' : question_text.string,
                'topics' : topics,
