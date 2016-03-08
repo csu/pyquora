@@ -67,11 +67,13 @@ class Quora:
     """
     if author is None: # For short URL's
       if re.match('http', question): # question like http://qr.ae/znrZ3
-        soup = BeautifulSoup(requests.get(question).text, "html.parser")
+        content = requests.get(question).text
       else: # question like znrZ3
-        soup = BeautifulSoup(requests.get('http://qr.ae/' + question).text, "html.parser")
+        content = requests.get('http://qr.ae/' + question).text
     else:
-      soup = BeautifulSoup(requests.get('http://www.quora.com/' + question + '/answer/' + author).text, "html.parser")
+      content = requests.get('http://www.quora.com/' + question + '/answer/' + author).text
+      
+    soup = BeautifulSoup(content, "html.parser")
     return Quora.scrape_one_answer(soup)
 
   @staticmethod
