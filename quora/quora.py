@@ -67,11 +67,11 @@ class Quora:
     """
     if author is None: # For short URL's
       if re.match('http', question): # question like http://qr.ae/znrZ3
-        soup = BeautifulSoup(requests.get(question).text)
+        soup = BeautifulSoup(requests.get(question).text, "html.parser")
       else: # question like znrZ3
-        soup = BeautifulSoup(requests.get('http://qr.ae/' + question).text)
+        soup = BeautifulSoup(requests.get('http://qr.ae/' + question).text, "html.parser")
     else:
-      soup = BeautifulSoup(requests.get('http://www.quora.com/' + question + '/answer/' + author).text)
+      soup = BeautifulSoup(requests.get('http://www.quora.com/' + question + '/answer/' + author).text, "html.parser")
     return Quora.scrape_one_answer(soup)
 
   @staticmethod
@@ -119,7 +119,7 @@ class Quora:
     """ (str) -> list
     Takes the title of one question and returns the latest answers to that question.
     """
-    soup = BeautifulSoup(requests.get('http://www.quora.com/' + question + '/log').text)
+    soup = BeautifulSoup(requests.get('http://www.quora.com/' + question + '/log').text, "html.parser")
     authors =  Quora.scrape_latest_answers(soup)
     return [Quora.get_one_answer(question, author) for author in authors]
 
@@ -149,7 +149,7 @@ class Quora:
     """ (soup) -> dict
     Returns details about the question.
     """
-    soup = BeautifulSoup(requests.get('http://www.quora.com/' + question).text)
+    soup = BeautifulSoup(requests.get('http://www.quora.com/' + question).text, "html.parser")
     return Quora.scrape_question_stats(soup)
 
   @staticmethod

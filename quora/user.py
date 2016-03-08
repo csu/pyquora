@@ -61,7 +61,7 @@ def is_review(link):
     return False
 
 def check_activity_type(entry):
-  description = BeautifulSoup(entry['description'])
+  description = BeautifulSoup(entry['description'], "html.parser")
   link    = entry['link']
   base_url  = entry['summary_detail']['base']
 
@@ -101,7 +101,7 @@ class User:
   @staticmethod
   def get_user_stats(user):
     try:
-      soup = BeautifulSoup(requests.get('http://www.quora.com/' + user).text)
+      soup = BeautifulSoup(requests.get('http://www.quora.com/' + user).text, "html.parser")
       data_stats = []
       name = get_name(soup)
       err = None
