@@ -39,7 +39,7 @@ class TestQuestionStatistics:
     def test_exists(self):
         for stat in self.test_stats:
             assert stat['answer_count']
-            # assert stat['topics']
+            assert stat['topics']
 
     def test_type(self):
         for stat in self.test_stats:
