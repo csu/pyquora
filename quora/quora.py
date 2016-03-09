@@ -159,7 +159,7 @@ class Quora:
       raw_topics = soup.find_all('div', attrs={'class' : 'TopicListItem'})
       topics = []
       for topic in raw_topics:
-        topics.append(topic.findAll(text=True, recursive=True)[1])
+        topics.extend(text for text in topic.findAll(text=True, recursive=True) if text.strip() != "")
 
       answer_count = soup.find('div', attrs={'class' : 'answer_count'}).next.split()[0]
       question_text = list(soup.find('div', attrs = {'class' : 'question_text_edit'}).find('h1').children)[-1]
