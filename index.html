@@ -1,45 +1,36 @@
-<!doctype html>
-<html>
+<!DOCTYPE html>
+<html lang="en-us">
   <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta charset="UTF-8">
     <title>pyquora by csu</title>
-
-    <link rel="stylesheet" href="stylesheets/styles.css">
-    <link rel="stylesheet" href="stylesheets/github-light.css">
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-    <!--[if lt IE 9]>
-    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
   </head>
   <body>
-    <div class="wrapper">
-      <header>
-        <h1>pyquora</h1>
-        <p>A Python module for fetching and parsing data from Quora.</p>
+    <section class="page-header">
+      <h1 class="project-name">pyquora</h1>
+      <h2 class="project-tagline">A Python module for fetching and parsing data from Quora.</h2>
+      <a href="https://github.com/csu/pyquora" class="btn">View on GitHub</a>
+      <a href="https://github.com/csu/pyquora/zipball/master" class="btn">Download .zip</a>
+      <a href="https://github.com/csu/pyquora/tarball/master" class="btn">Download .tar.gz</a>
+    </section>
 
-        <p class="view"><a href="https://github.com/csu/pyquora">View the Project on GitHub <small>csu/pyquora</small></a></p>
-
-
-        <ul>
-          <li><a href="https://github.com/csu/pyquora/zipball/master">Download <strong>ZIP File</strong></a></li>
-          <li><a href="https://github.com/csu/pyquora/tarball/master">Download <strong>TAR Ball</strong></a></li>
-          <li><a href="https://github.com/csu/pyquora">View On <strong>GitHub</strong></a></li>
-        </ul>
-      </header>
-      <section>
-        <h1>
-<a id="pyquora" class="anchor" href="#pyquora" aria-hidden="true"><span class="octicon octicon-link"></span></a>pyquora</h1>
+    <section class="main-content">
+      <h1>
+<a id="pyquora" class="anchor" href="#pyquora" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>pyquora</h1>
 
 <h4>
-<a id="note-parts-of-this-library-may-be-broken-due-to-changes-on-quoras-end-issues-and-pull-requests-welcome" class="anchor" href="#note-parts-of-this-library-may-be-broken-due-to-changes-on-quoras-end-issues-and-pull-requests-welcome" aria-hidden="true"><span class="octicon octicon-link"></span></a>Note: parts of this library may be broken due to changes on Quora's end. Issues and pull requests welcome.</h4>
+<a id="note-parts-of-this-library-may-be-broken-due-to-changes-on-quoras-end-issues-and-pull-requests-welcome" class="anchor" href="#note-parts-of-this-library-may-be-broken-due-to-changes-on-quoras-end-issues-and-pull-requests-welcome" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Note: parts of this library may be broken due to changes on Quora's end. Issues and pull requests welcome.</h4>
 
 <p><a href="https://travis-ci.org/csu/pyquora"><img src="https://travis-ci.org/csu/pyquora.svg?branch=master" alt="Build Status"></a></p>
 
 <p>A Python module to fetch and parse data from Quora.</p>
 
 <h3>
-<a id="table-of-contents" class="anchor" href="#table-of-contents" aria-hidden="true"><span class="octicon octicon-link"></span></a>Table of Contents</h3>
+<a id="table-of-contents" class="anchor" href="#table-of-contents" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Table of Contents</h3>
 
 <ul>
 <li><a href="#installation">Installation</a></li>
@@ -50,7 +41,7 @@
 </ul>
 
 <h2>
-<a id="installation" class="anchor" href="#installation" aria-hidden="true"><span class="octicon octicon-link"></span></a>Installation</h2>
+<a id="installation" class="anchor" href="#installation" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Installation</h2>
 
 <p>You will need <a href="https://www.python.org/download/">Python 2</a>. <a href="http://pip.readthedocs.org/en/latest/installing.html">pip</a> is recommended for installing dependencies.</p>
 
@@ -60,12 +51,12 @@
 </code></pre>
 
 <h2>
-<a id="usage" class="anchor" href="#usage" aria-hidden="true"><span class="octicon octicon-link"></span></a>Usage</h2>
+<a id="usage" class="anchor" href="#usage" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Usage</h2>
 
 <h3>
-<a id="user-statistics" class="anchor" href="#user-statistics" aria-hidden="true"><span class="octicon octicon-link"></span></a>User statistics</h3>
+<a id="user-statistics" class="anchor" href="#user-statistics" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>User statistics</h3>
 
-<div class="highlight highlight-python"><pre><span class="pl-k">from</span> quora <span class="pl-k">import</span> User
+<div class="highlight highlight-source-python"><pre><span class="pl-k">from</span> quora <span class="pl-k">import</span> User
 
 user <span class="pl-k">=</span> User(<span class="pl-s"><span class="pl-pds">'</span>Christopher-J-Su<span class="pl-pds">'</span></span>)
 
@@ -73,18 +64,18 @@ user <span class="pl-k">=</span> User(<span class="pl-s"><span class="pl-pds">'<
 activity <span class="pl-k">=</span> user.activity
 
 <span class="pl-c"># Do stuff with the parsed activity data</span>
-<span class="pl-k">print</span> activity
+<span class="pl-c1">print</span> activity
 
 <span class="pl-c"># Get user statistics</span>
 stats <span class="pl-k">=</span> user.stats
 
 <span class="pl-c"># Take a gander</span>
-<span class="pl-k">print</span> stats</pre></div>
+<span class="pl-c1">print</span> stats</pre></div>
 
 <h3>
-<a id="questions" class="anchor" href="#questions" aria-hidden="true"><span class="octicon octicon-link"></span></a>Questions</h3>
+<a id="questions" class="anchor" href="#questions" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Questions</h3>
 
-<div class="highlight highlight-python"><pre><span class="pl-k">from</span> quora <span class="pl-k">import</span> Quora
+<div class="highlight highlight-source-python"><pre><span class="pl-k">from</span> quora <span class="pl-k">import</span> Quora
 
 <span class="pl-c"># Get question statistics</span>
 question <span class="pl-k">=</span> Quora.get_question_stats(<span class="pl-s"><span class="pl-pds">'</span>what-is-python<span class="pl-pds">'</span></span>)
@@ -99,9 +90,9 @@ question <span class="pl-k">=</span> Quora.get_question_stats(<span class="pl-s"
 <span class="pl-c"># }</span></pre></div>
 
 <h3>
-<a id="answer-statistics" class="anchor" href="#answer-statistics" aria-hidden="true"><span class="octicon octicon-link"></span></a>Answer statistics</h3>
+<a id="answer-statistics" class="anchor" href="#answer-statistics" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Answer statistics</h3>
 
-<div class="highlight highlight-python"><pre><span class="pl-k">from</span> quora <span class="pl-k">import</span> Quora
+<div class="highlight highlight-source-python"><pre><span class="pl-k">from</span> quora <span class="pl-k">import</span> Quora
 
 <span class="pl-c"># The function can be called in any of the following ways.</span>
 answer <span class="pl-k">=</span> Quora.get_one_answer(<span class="pl-s"><span class="pl-pds">'</span>http://qr.ae/6hARL<span class="pl-pds">'</span></span>)
@@ -123,10 +114,10 @@ answer <span class="pl-k">=</span> Quora.get_one_answer(question, author) <span 
 latest_answers <span class="pl-k">=</span> Quora.get_latest_answers(<span class="pl-s"><span class="pl-pds">'</span>what-is-python<span class="pl-pds">'</span></span>)</pre></div>
 
 <h2>
-<a id="features" class="anchor" href="#features" aria-hidden="true"><span class="octicon octicon-link"></span></a>Features</h2>
+<a id="features" class="anchor" href="#features" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Features</h2>
 
 <h3>
-<a id="currently-implemented" class="anchor" href="#currently-implemented" aria-hidden="true"><span class="octicon octicon-link"></span></a>Currently implemented</h3>
+<a id="currently-implemented" class="anchor" href="#currently-implemented" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Currently implemented</h3>
 
 <ul>
 <li>User statistics</li>
@@ -136,21 +127,21 @@ latest_answers <span class="pl-k">=</span> Quora.get_latest_answers(<span class=
 </ul>
 
 <h3>
-<a id="to-do" class="anchor" href="#to-do" aria-hidden="true"><span class="octicon octicon-link"></span></a>To do</h3>
+<a id="to-do" class="anchor" href="#to-do" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>To do</h3>
 
 <ul>
 <li>Detailed user information (followers, following, etc.; not just statistics)</li>
 </ul>
 
 <h2>
-<a id="contribute" class="anchor" href="#contribute" aria-hidden="true"><span class="octicon octicon-link"></span></a>Contribute</h2>
+<a id="contribute" class="anchor" href="#contribute" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Contribute</h2>
 
 <p><a href="https://gitter.im/csu/pyquora?utm_source=badge&amp;utm_medium=badge&amp;utm_campaign=pr-badge&amp;utm_content=badge"><img src="https://badges.gitter.im/Join%20Chat.svg" alt="Gitter"></a>   <a href="https://huboard.com/csu/pyquora/"><img src="http://img.shields.io/badge/Hu-Board-7965cc.svg" alt="HuBoard"></a></p>
 
 <p>Check out the issues on GitHub and/or make a pull request to contribute!</p>
 
 <h2>
-<a id="projects-using-pyquora" class="anchor" href="#projects-using-pyquora" aria-hidden="true"><span class="octicon octicon-link"></span></a>Projects using <code>pyquora</code>
+<a id="projects-using-pyquora" class="anchor" href="#projects-using-pyquora" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Projects using <code>pyquora</code>
 </h2>
 
 <ul>
@@ -159,14 +150,16 @@ latest_answers <span class="pl-k">=</span> Quora.get_latest_answers(<span class=
 <li>
 <a href="https://github.com/csu/quora-backup"><code>quora-backup</code></a> – A Python package and CLI for backing up Quora data.</li>
 </ul>
-      </section>
-      <footer>
-        <p>This project is maintained by <a href="https://github.com/csu">csu</a></p>
-        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+
+      <footer class="site-footer">
+        <span class="site-footer-owner"><a href="https://github.com/csu/pyquora">pyquora</a> is maintained by <a href="https://github.com/csu">csu</a>.</span>
+
+        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
       </footer>
-    </div>
-    <script src="javascripts/scale.fix.js"></script>
-              <script type="text/javascript">
+
+    </section>
+
+            <script type="text/javascript">
             var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
             document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
           </script>
