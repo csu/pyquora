@@ -186,7 +186,7 @@ class Quora:
     @staticmethod
     def get_user_stats(u):
         """ (str) -> dict
-        Depreciated. Use the User class.
+        Deprecated. Use the User class.
         """
         from user import User
         return User.get_user_stats(u)
@@ -194,7 +194,7 @@ class Quora:
     @staticmethod
     def get_user_activity(u):
         """ (str) -> dict
-        Depreciated. Use the User class.
+        Deprecated. Use the User class.
         """
         from user import User
         return User.get_user_activity(u)
@@ -202,7 +202,7 @@ class Quora:
     @staticmethod
     def get_activity(u):
         """ (str) -> dict
-        Depreciated. Use the User class.
+        Deprecated. Use the User class.
         """
         from user import User
         return User.get_activity(u)

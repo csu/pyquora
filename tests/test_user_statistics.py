@@ -1,21 +1,17 @@
 from quora import User
 
 expected_user_stat_keys = ['answers',
-                            'edits',
-                            'followers',
-                            'following',
-                            'questions',
-                            'name',
-                            'username'
-                            ]
+                           'edits',
+                           'followers',
+                           'following',
+                           'questions',
+                           'name',
+                           'username']
 
 class TestUserStatistics:
     test_stats = []
     test_stats.append(User('Christopher-J-Su').stats)
-    # test_stats.append(User('Aaron-Ounn').stats
-    # test_stats.append(User('Elynn-Lee').stats
-    # test_stats.append(User('Jennifer-Apacible-1').stats)
-    # TODO: add tests for nonexistant users and other edge cases
+    # TODO: add tests for nonexistent users and other edge cases
 
     def test_exists(self):
         for stat in self.test_stats:
