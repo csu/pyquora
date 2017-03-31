@@ -11,7 +11,7 @@ branches:
 # install dependencies
 install:
   - "pip install -r requirements.txt"
-  - "pip install -r dev-requirements.txt"
+  - "pip install -r requirements-dev.txt"
 
 # run tests
 script: 
