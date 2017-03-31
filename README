@@ -1,28 +1,18 @@
 pyquora
 =======
 
-Note: parts of this library may be broken due to changes on Quora's end. Issues and pull requests welcome.
-----------------------------------------------------------------------------------------------------------
+Note: Parts of this library are broken due to changes on Quora's end. Issues and pull requests welcome.
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 |Build Status|
 
 A Python module to fetch and parse data from Quora.
 
-Table of Contents
------------------
-
--  `Installation <#installation>`__
--  `Usage <#usage>`__
--  `Features <#features>`__
--  `Contribute <#contribute>`__
--  `Projects using ``pyquora`` <#projects-using-pyquora>`__
-
 Installation
 ------------
 
-You will need `Python 2 <https://www.python.org/download/>`__.
-`pip <http://pip.readthedocs.org/en/latest/installing.html>`__ is
-recommended for installing dependencies.
+You will need `Python 2.x <https://www.python.org/download/>`__ and
+`pip <http://pip.readthedocs.org/en/latest/installing.html>`__.
 
 Install using pip:
 

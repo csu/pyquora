@@ -2,7 +2,7 @@ import pandoc
 import os
 import re
 
-pandoc.core.PANDOC_PATH = '/usr/local/bin/pandoc'
+pandoc.core.PANDOC_PATH = '/usr/bin/pandoc'
 
 def convert_md_to_rst():
     doc = pandoc.Document()
@@ -16,6 +16,10 @@ def convert_md_to_rst():
     filtered = re.sub('Contribute\n----------.*', '', filtered, flags=re.DOTALL)
 
     f = open('README', 'w+')
+    f.write(filtered)
+    f.close()
+
+    f = open('README.rst', 'w+')
     f.write(filtered)
     f.close()
 
