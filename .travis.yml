@@ -15,7 +15,10 @@ install:
 
 # run tests
 script: 
-  - "nosetests --with-coverage"
+  - "nosetests --with-coverage --cover-package=quora"
+
+after_failure:
+  - bash <(curl -s https://codecov.io/bash)
 
 after_success:
   - bash <(curl -s https://codecov.io/bash)
