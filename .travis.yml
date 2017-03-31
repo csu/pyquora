@@ -10,7 +10,8 @@ install:
   - "pip install -r dev-requirements.txt"
 
 # run tests
-script: nosetests
+script: 
+  - "nosetests --with-coverage --cover-package=quora"
 
 branches:
   only:
