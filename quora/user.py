@@ -1,7 +1,7 @@
 #coding=utf-8
 
 from bs4 import BeautifulSoup
-from quora import try_cast_int
+from .quora import try_cast_int
 import feedparser
 import re
 import requests
@@ -13,7 +13,7 @@ POSSIBLE_FEED_KEYS = ['link', 'id', 'published', 'title', 'summary']
 ### Enumerated Types ###
 def enum(*sequential, **named):
     enums = dict(zip(sequential, range(len(sequential))), **named)
-    reverse = dict((value, key) for key, value in enums.iteritems())
+    reverse = dict((value, key) for key, value in enums.items())
     enums['reverse_mapping'] = reverse
     return type('Enum', (), enums)
 
