@@ -18,6 +18,6 @@ setup(
     install_requires=[
         "beautifulsoup4 == 4.3.2",
         "feedparser == 5.1.3",
-        "requests == 2.5.0"
+        "requests == 2.31.0"
     ]
 )
